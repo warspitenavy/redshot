@@ -7,7 +7,7 @@ import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 
 object CommandRegister: CommandExecutor {
-    private val commands: HashMap<String, CommandExecutor> = linkedMapOf(
+    private val commands = mapOf(
         "get" to GetWeapon,
         "give" to GiveWeapon
     )

@@ -1,23 +1,24 @@
-package navy.warspite.minecraft.redshot
+package navy.warspite.minecraft.redshot.commands
 
-import navy.warspite.minecraft.redshot.commands.GetWeapon
-import navy.warspite.minecraft.redshot.commands.GiveWeapon
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 
-object CommandRegister: CommandExecutor {
-    private val commands = mapOf(
+object CommandRegister : CommandExecutor {
+    private val commands = linkedMapOf(
         "get" to GetWeapon,
         "give" to GiveWeapon
     )
+
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         return when {
             args.isEmpty() -> {
-                sender.sendMessage("""
+                sender.sendMessage(
+                    """
                     /redshot get <Weapon>
                     /redshot give <Player> <Weapon>
-                """.trimIndent())
+                """.trimIndent()
+                )
                 true
             }
             commands.containsKey(args[0]) -> {

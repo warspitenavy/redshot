@@ -1,27 +1,36 @@
 package navy.warspite.minecraft.redshot;
 
-import org.bukkit.plugin.java.JavaPlugin
-import org.omg.CORBA.Object
 import org.yaml.snakeyaml.Yaml
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
-class LoadWeapons(private val plugin: JavaPlugin) {
-    val weaponYaml = linkedMapOf<String, Object>()
-    fun loadWeapon() {
+object LoadWeapons {
+    val weaponsHashMap = linkedMapOf<String, Any>()
+
+    fun generateMap() {
+        val weaponsYaml = loadWeapon()
+        weaponsYaml.forEach { (k, v) ->
+            val data = linkedMapOf<String, Any>()
+            v as LinkedHashMap<*, *>
+            v.forEach { data["${it.key}"] = it.value }
+            weaponsHashMap[k] = data
+        }
+    }
+
+    private fun loadWeapon(): LinkedHashMap<String, Any> {
+        val weaponsYaml = linkedMapOf<String, Any>()
         val weaponFiles = loadWeaponFiles()
-        if (weaponFiles.isEmpty()) return
         weaponFiles.forEach {
             val file = Files.newInputStream(it)
-            val yaml: LinkedHashMap<String, Object> = Yaml().load(file)
-            weaponYaml.putAll(yaml)
+            val yaml: LinkedHashMap<String, Any> = Yaml().load(file)
+            weaponsYaml.putAll(yaml)
         }
-        plugin.logger.info("Loaded weapons data: ${weaponYaml.keys}")
+        return weaponsYaml
     }
 
     private fun loadWeaponFiles(): ArrayList<Path> {
-        val dir = Paths.get("./plugins/${plugin.name}/Weapons")
+        val dir = Paths.get("./plugins/RedShot/Weapons")
         val fileExtension = ".yml"
         if (!Files.isDirectory(dir)) Files.createDirectory(dir)
         if (Files.notExists(dir)) Files.createDirectory(dir)
@@ -31,8 +40,6 @@ class LoadWeapons(private val plugin: JavaPlugin) {
         Files.list(dir).forEach {
             if ("$it".endsWith(fileExtension)) weaponFiles.add(it)
         }
-        plugin.logger.info("Loaded Yaml: ${weaponFiles.map { it.fileName }}")
-
         return weaponFiles
     }
 }

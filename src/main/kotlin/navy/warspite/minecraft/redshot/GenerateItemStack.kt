@@ -1,32 +1,50 @@
 package navy.warspite.minecraft.redshot
 
-import navy.warspite.minecraft.redshot.util.GetColoured
-import navy.warspite.minecraft.redshot.util.GetColoured.getColoured
+import navy.warspite.minecraft.redshot.util.GetColoured.colouredMessage
+import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
 import org.bukkit.inventory.ItemStack
 import org.bukkit.persistence.PersistentDataType
-import org.bukkit.plugin.java.JavaPlugin
 
 object GenerateItemStack {
     private val plugin = Main.instance
     fun generate(key: String): Any {
-        val weapon = LoadWeapons.weaponsHashMap[key] ?: return getColoured("Weapon do not exist.")
+        val weapon = LoadWeapons.weaponsHashMap[key]
+            ?: return colouredMessage("Weapon do not exist.")
         weapon as LinkedHashMap<*, *>
 
-        val itemInformation = weapon["itemInformation"] ?: return getColoured("\"itemInformation\" is null.")
+        val itemInformation = weapon["itemInformation"]
+            ?: return colouredMessage("&cERROR:&r \"itemInformation\"")
         itemInformation as LinkedHashMap<*, *>
 
-        val itemType = itemInformation["itemType"] ?: return getColoured("\"itemType\" is null.")
+        val itemName = itemInformation["itemName"]
+            ?: return colouredMessage("&cERROR&r: \"itemName\"")
+        itemName as String
+
+        val itemType = itemInformation["itemType"]
+            ?: return colouredMessage("&cERROR&r: \"itemType\"")
         itemType as String
+
+        val itemLore = itemInformation["itemLore"]
+            ?: return colouredMessage("&cERROR&r: \"itemLore\"")
+        itemLore as ArrayList<String>
 
         val nameSpacedKey = NamespacedKey(plugin, "RedShotKey")
 
-        val itemStack = Material.getMaterial(itemType)
-            ?.let { ItemStack(it) } ?: return getColoured("\"itemType\" error")
+        val itemStack = Material.getMaterial(itemType)?.let { ItemStack(it) }
+            ?: return colouredMessage("&cERROR&r: \"itemStack\"")
 
-        itemStack.itemMeta?.persistentDataContainer
+        val itemMeta = itemStack.itemMeta
+
+        itemMeta?.persistentDataContainer
             ?.set(nameSpacedKey, PersistentDataType.STRING, key)
+
+        itemMeta?.setDisplayName(itemName) //アイテム名
+
+        itemMeta?.lore = itemLore //アイテムロール
+
+        itemStack.itemMeta = itemMeta
 
         return itemStack
     }

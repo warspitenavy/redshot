@@ -1,11 +1,12 @@
 package navy.warspite.minecraft.redshot.commands
 
+import navy.warspite.minecraft.redshot.util.GetColoured.colouredText
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 
 object CommandRegister : CommandExecutor {
-    private val commands = linkedMapOf(
+    val commands = linkedMapOf(
         "get" to GetWeapon,
         "give" to GiveWeapon
     )
@@ -14,10 +15,13 @@ object CommandRegister : CommandExecutor {
         return when {
             args.isEmpty() -> {
                 sender.sendMessage(
-                    """
-                    /redshot get <Weapon>
-                    /redshot give <Player> <Weapon>
-                """.trimIndent()
+                    colouredText(
+                        """
+                            &r--------- &cRedShot &r----------------
+                            &c/redshot get &r<&cID&r>
+                            &c/redshot give &r<&cPlayer&r> <&cID&r>
+                        """.trimIndent()
+                    )
                 )
                 true
             }

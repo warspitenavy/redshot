@@ -8,7 +8,8 @@ import org.bukkit.command.CommandSender
 object CommandRegister : CommandExecutor {
     val commands = linkedMapOf(
         "get" to GetWeapon,
-        "give" to GiveWeapon
+        "give" to GiveWeapon,
+        "reload" to Reload
     )
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {

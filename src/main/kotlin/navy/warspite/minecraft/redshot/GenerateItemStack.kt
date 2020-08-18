@@ -1,6 +1,7 @@
 package navy.warspite.minecraft.redshot
 
 import navy.warspite.minecraft.redshot.util.GetColoured.colouredMessage
+import navy.warspite.minecraft.redshot.util.GetColoured.colouredText
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
@@ -26,9 +27,9 @@ object GenerateItemStack {
             ?: return colouredMessage("&cERROR&r: \"itemType\"")
         itemType as String
 
-        val itemLore = itemInformation["itemLore"]
-            ?: return colouredMessage("&cERROR&r: \"itemLore\"")
-        itemLore as ArrayList<String>
+        val itemLore = arrayListOf<String>()
+        val itemInfoItemLore = itemInformation["itemLore"] as ArrayList<*>?
+        itemInfoItemLore?.forEach { itemLore.add(colouredText(it as String)) }
 
         val nameSpacedKey = NamespacedKey(plugin, "RedShotKey")
 
@@ -40,12 +41,18 @@ object GenerateItemStack {
         itemMeta?.persistentDataContainer
             ?.set(nameSpacedKey, PersistentDataType.STRING, key)
 
-        itemMeta?.setDisplayName(itemName) //アイテム名
+        itemMeta?.setDisplayName(colouredText(itemName)) //アイテム名
 
         itemMeta?.lore = itemLore //アイテムロール
 
         itemStack.itemMeta = itemMeta
 
-        return itemStack
+        val soundsAcquired = itemInformation["soundsAcquired"]
+        soundsAcquired as ArrayList<*>?
+
+        return linkedMapOf(
+            "itemStack" to itemStack,
+            "soundsAcquired" to soundsAcquired
+        )
     }
 }

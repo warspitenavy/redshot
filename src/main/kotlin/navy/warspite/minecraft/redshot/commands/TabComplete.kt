@@ -1,5 +1,6 @@
 package navy.warspite.minecraft.redshot.commands
 
+import navy.warspite.minecraft.redshot.LoadWeapons
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabCompleter
@@ -17,6 +18,13 @@ object TabComplete: TabCompleter {
         when(args.size) {
             1 -> {
                 return commands
+            }
+            2 -> {
+                val weapons = mutableListOf<String>()
+                if (args[0] == "get") {
+                    LoadWeapons.weaponsHashMap.keys.forEach{ weapons.add(it) }
+                }
+                return weapons
             }
         }
         return null

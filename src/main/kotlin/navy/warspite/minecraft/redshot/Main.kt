@@ -16,7 +16,6 @@ class Main : JavaPlugin() {
         instance = this
         saveDefaultConfig()
         LoadWeapons.generateMap()
-        logger.info("Loaded weapons: ${LoadWeapons.weaponsHashMap.keys}") // print
         getCommand("redshot")?.setExecutor(CommandRegister)
         getCommand("redshot")?.tabCompleter = TabComplete
         server.pluginManager.registerEvents(ShotEvent, this)

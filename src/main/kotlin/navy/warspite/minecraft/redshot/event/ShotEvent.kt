@@ -14,7 +14,7 @@ import org.bukkit.scheduler.BukkitRunnable
 
 object ShotEvent : Listener {
     private val plugin = Main.instance
-    private val shootingPlayers = linkedMapOf<String, Boolean>()
+    private val shootingPlayer = linkedMapOf<String, Boolean>()
     private val burstPlayers = linkedMapOf<String, Boolean>()
     private val shootCount = linkedMapOf<String, Int>()
 
@@ -28,8 +28,8 @@ object ShotEvent : Listener {
     private fun shot(e: PlayerInteractEvent) {
         if (shootCount[e.player.name] == null) shootCount[e.player.name] = 0
 //        e.player.sendMessage(colouredMessage(shootingPlayers[e.player.name].toString()))
-        if (shootingPlayers[e.player.name] == null) shootingPlayers[e.player.name] = false
-        if (burstPlayers[e.player.name] == null) shootingPlayers[e.player.name] = false
+        if (shootingPlayer[e.player.name] == null) shootingPlayer[e.player.name] = false
+//        if (burstPlayers[e.player.name] == null) shootingPlayers[e.player.name] = false
 
         val itemStack = e.player.inventory.itemInMainHand
         val key = NamespacedKey(plugin, "RedShotKey")
@@ -53,7 +53,7 @@ object ShotEvent : Listener {
         val projectileAmount = (shooting["projectileAmount"] ?: 1) as Int
         val projectileDamage = (shooting["projectileDamage"] ?: 0) as Int
         val projectileSpeed = (shooting["projectileSpeed"] ?: 40) as Int
-        val projectileType = ((shooting["projectileType"] ?: "snowball") as String)
+        val projectileType = (shooting["projectileType"] ?: "snowball") as String
         val shootSounds = shooting["shootSounds"] as ArrayList<*>?
 
         val fullyAutomatic = weapon["fullyAutomatic"] as LinkedHashMap<*, *>?
@@ -80,10 +80,10 @@ object ShotEvent : Listener {
             when (projectileType) {
                 "snowball" -> {
                     for (i in 1..projectileAmount) {
-                        val snowball = e.player.launchProjectile(Snowball::class.java)
-                        val damage = NamespacedKey(plugin, "damage")
-                        snowball.persistentDataContainer
-                            .set(damage, PersistentDataType.INTEGER, projectileDamage)
+                        e.player.launchProjectile(Snowball::class.java)
+//                        val damage = NamespacedKey(plugin, "damage")
+//                        snowball.persistentDataContainer
+//                            .set(damage, PersistentDataType.INTEGER, projectileDamage)
                     }
                 }
             }
@@ -95,10 +95,7 @@ object ShotEvent : Listener {
 //                return min / 60
 //            }
 
-            if (shootingPlayers[e.player.name]!!) {
-                e.player.sendMessage(colouredMessage("shot"))
-                return
-            }
+            shootingPlayer[e.player.name] = true
 
             var count = 0
             val perBurst = when (fireRate) {
@@ -121,14 +118,14 @@ object ShotEvent : Listener {
                 else -> arrayListOf(1, 1, 1, 1)
             }
 
-            val playerShootCount = shootCount[e.player.name]!!
-
             val period = when {
                 fireRate <= 6 -> arrayListOf(2, 2, 2, 2)
                 fireRate == 7 -> arrayListOf(2, 2, 2, 1)
                 fireRate >= 8 -> arrayListOf(1, 1, 1, 1)
                 else -> arrayListOf(1, 1, 1, 1)
             }
+
+            val playerShootCount = shootCount[e.player.name]!!
 
             println("purBurst:${perBurst[playerShootCount]}")
             println("period:${period[playerShootCount]}")
@@ -137,14 +134,11 @@ object ShotEvent : Listener {
             object : BukkitRunnable() {
                 override fun run() {
                     if (count < perBurst[playerShootCount]) {
-                        shootingPlayers[e.player.name] = true
                         playShootSounds()
                         shootProjectile()
-                        e.player.sendMessage(colouredMessage(shootingPlayers[e.player.name].toString()))
                         count++
                     } else {
-                        shootingPlayers[e.player.name] = false
-                        e.player.sendMessage(colouredMessage(shootingPlayers[e.player.name].toString()))
+                        shootingPlayer[e.player.name] = false
                         cancel()
                     }
                 }
@@ -153,8 +147,15 @@ object ShotEvent : Listener {
             if (shootCount[e.player.name]!! > 3) shootCount[e.player.name] = 0
         }
 
-        if (delayBetweenShots == null) {
-            repeatShoot()
+        if (delayBetweenShots != null) {
+            playShootSounds()
+            shootProjectile()
+        }
+        else {
+            if (!shootingPlayer[e.player.name]!!) repeatShoot()
+            else return
+        }
+
 //            if (shootingPlayers[e.player.name]!!) {
 //                e.player.sendMessage(colouredMessage("You are shot"))
 //                return
@@ -171,7 +172,6 @@ object ShotEvent : Listener {
 //                    }, 4
 //                )
 //            }
-        }
 
 //        val currTime = System.currentTimeMillis()
 //        if (!clickPlayers.containsKey(e.player.name)) {

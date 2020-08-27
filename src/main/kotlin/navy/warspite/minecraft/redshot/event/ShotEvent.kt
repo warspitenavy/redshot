@@ -4,11 +4,13 @@ import navy.warspite.minecraft.redshot.LoadWeapons
 import navy.warspite.minecraft.redshot.Main
 import navy.warspite.minecraft.redshot.util.GetColoured.colouredMessage
 import org.bukkit.*
+import org.bukkit.entity.Entity
 import org.bukkit.entity.Snowball
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
+import org.bukkit.metadata.FixedMetadataValue
 import org.bukkit.persistence.PersistentDataType
 import org.bukkit.scheduler.BukkitRunnable
 
@@ -58,9 +60,6 @@ object ShotEvent : Listener {
         val shotPerBurst = (burstFire?.get("shotsPerBurst") ?: 1) as Int
         val delayBetweenShotsInBurst = (burstFire?.get("delayBetweenShotsInBurst") ?: 0) as Int
 
-//        val fullyAutomatic = weapon["fullyAutomatic"] as LinkedHashMap<*, *>?
-//        val fireRate = fullyAutomatic?.get("fireRate") as Int
-
         fun playShootSounds() {
             shootSounds?.forEach {
                 it as String
@@ -82,13 +81,29 @@ object ShotEvent : Listener {
             when (projectileType) {
                 "snowball" -> {
                     for (i in 1..projectileAmount) {
-                        e.player.launchProjectile(Snowball::class.java)
-//                        val damage = NamespacedKey(plugin, "damage")
-//                        snowball.persistentDataContainer
-//                            .set(damage, PersistentDataType.INTEGER, projectileDamage)
+//                        val snowball = Snowball::class.java
+//                        e.player.launchProjectile(snowball)
+                        val snowball = e.player.launchProjectile(Snowball::class.java)
+                        snowball.setMetadata(
+                            "damage", FixedMetadataValue(
+                                plugin,
+                                projectileDamage
+                            )
+                        )
+                        snowball.setMetadata(
+                            "shooter", FixedMetadataValue(
+                                plugin,
+                                e.player
+                            )
+                        )
                     }
                 }
             }
+        }
+
+        fun shoot() {
+            playShootSounds()
+            shootProjectile()
         }
 
         fun burstFireShot() {
@@ -96,8 +111,7 @@ object ShotEvent : Listener {
             object : BukkitRunnable() {
                 override fun run() {
                     if (runCount < shotPerBurst) {
-                        playShootSounds()
-                        shootProjectile()
+                        shoot()
                         runCount++
                     } else {
                         cancel()
@@ -109,14 +123,12 @@ object ShotEvent : Listener {
         if (shootingPlayer[e.player.name]!!) return
 
         if (burstFire == null) {
-            playShootSounds()
-            shootProjectile()
+            shoot()
             shootingPlayer[e.player.name] = true
             Bukkit.getScheduler().runTaskLater(plugin, Runnable {
                 shootingPlayer[e.player.name] = false
             }, delayBetweenShots.toLong())
-        }
-        else {
+        } else {
             burstFireShot()
             shootingPlayer[e.player.name] = true
             Bukkit.getScheduler().runTaskLater(plugin, Runnable {

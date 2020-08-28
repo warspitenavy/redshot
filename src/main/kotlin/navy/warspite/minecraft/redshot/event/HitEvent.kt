@@ -18,8 +18,6 @@ object HitEvent : Listener {
         val snowball = if (e.entity is Snowball) e.entity else return
         if (!snowball.hasMetadata("damage")) return
         if (!snowball.hasMetadata("shooter")) return
-//        val damageMetadata = mutableListOf<MetadataValue>()
-//        val shooterMetadata = mutableListOf<MetadataValue>()
         var damageMetadata: MetadataValue? = null
         for (v in snowball.getMetadata("damage")) {
             if (v.owningPlugin?.name == plugin.name) damageMetadata = v

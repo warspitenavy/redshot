@@ -31,7 +31,10 @@ object GenerateItemStack {
         val itemInfoItemLore = itemInformation["itemLore"] as ArrayList<*>?
         itemInfoItemLore?.forEach { itemLore.add(colouredText(it as String)) }
 
-        val nameSpacedKey = NamespacedKey(plugin, "RedShotKey")
+        // PersistentDataContainer
+
+        val weaponId = NamespacedKey(plugin, "weaponId")
+        val ammo = NamespacedKey(plugin, "ammo")
 
         val itemStack = Material.getMaterial(itemType)?.let { ItemStack(it) }
             ?: return colouredMessage("&cERROR&r: \"itemStack\"")
@@ -39,9 +42,11 @@ object GenerateItemStack {
         val itemMeta = itemStack.itemMeta
 
         itemMeta?.persistentDataContainer
-            ?.set(nameSpacedKey, PersistentDataType.STRING, key)
+            ?.set(weaponId, PersistentDataType.STRING, key)
+        itemMeta?.persistentDataContainer
+            ?.set(ammo, PersistentDataType.INTEGER, 0)
 
-        itemMeta?.setDisplayName(colouredText(itemName)) //アイテム名
+        itemMeta?.setDisplayName(colouredText("""$itemName □ «0»""")) //アイテム名
 
         itemMeta?.lore = itemLore //アイテムロール
 

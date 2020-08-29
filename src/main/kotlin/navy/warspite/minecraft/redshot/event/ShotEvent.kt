@@ -157,17 +157,29 @@ object ShotEvent : Listener {
         val delayBetweenShotsInBurst = (burstFire?.get("delayBetweenShotsInBurst") ?: 0) as Int
 
         val sneak = weapon["sneak"] as LinkedHashMap<*, *>?
-        val noRecoil = (sneak?.get("noRecoil") ?: false) as Boolean
-        val recoilX = (sneak?.get("recoilX") ?: 0.0) as Double
-        val recoilY = (sneak?.get("recoilY") ?: 0.0) as Double
-        val sneakBulletSpread = (sneak?.get("bulletSpread") ?: 0.0) as Double
+        val noRecoil = sneak?.get("noRecoil") as Boolean?
+        val recoilX = sneak?.get("recoilX") as Double?
+        val recoilY = sneak?.get("recoilY") as Double?
+        val sneakBulletSpread = sneak?.get("bulletSpread") as Double?
 
         val scope = weapon["scope"] as LinkedHashMap<*, *>?
-        val zoomBulletSpread = (scope?.get("bulletSpread") ?: 0.0) as Double
+        val zoomBulletSpread = scope?.get("bulletSpread") as Double?
 
         fun shootProjectile(accuracy: Double) {
             when (projectileType) {
                 "snowball" -> {
+                    val itemStack = player.inventory.itemInMainHand
+                    if (itemStack.itemMeta == null) return
+                    val key = NamespacedKey(plugin, "ammo")
+                    val container = itemStack.itemMeta!!.persistentDataContainer
+                    val ammoAmount =
+                        if (container.has(key, PersistentDataType.INTEGER)) {
+                            container.get(key, PersistentDataType.INTEGER)
+                        } else null
+                    if (ammoAmount != null) {
+                        itemStack.itemMeta =
+                            setAmmoAmount(itemStack.itemMeta!!, ammoAmount-1)
+                    }
                     for (i in 1..projectileAmount) {
                         val snowball = player.launchProjectile(Snowball::class.java)
                         snowball.setMetadata(
@@ -200,11 +212,14 @@ object ShotEvent : Listener {
 
         fun shoot() {
             if (zoomingPlayer[player.name]!!) {
-                shootProjectile(zoomBulletSpread)
+                if (zoomBulletSpread != null) {
+                    shootProjectile(zoomBulletSpread)
+                }
                 return
             }
             if (player.isSneaking) {
-                shootProjectile(sneakBulletSpread)
+                if (sneak == null) return
+                if (sneakBulletSpread != null) shootProjectile(sneakBulletSpread)
                 return
             }
             shootProjectile(bulletSpread)
@@ -231,8 +246,9 @@ object ShotEvent : Listener {
             shootingPlayer[player.name] = true
             Bukkit.getScheduler().runTaskLater(plugin, Runnable {
                 shootingPlayer[player.name] = false
-            }, delayBetweenShots.toLong())
-        } else {
+            }, delayBetweenShots.toLong()) }
+
+        else {
             burstFireShot()
             shootingPlayer[player.name] = true
             Bukkit.getScheduler().runTaskLater(plugin, Runnable {
@@ -250,7 +266,7 @@ object ShotEvent : Listener {
         val weapon = LoadWeapons.weaponsHashMap[id] as LinkedHashMap<*, *>? ?: return
         val reload = weapon["reload"] as LinkedHashMap<*, *>? ?: return
         val reloadAmount = reload["reloadAmount"] as Int? ?: return
-        item.itemStack.itemMeta = item.itemStack.itemMeta?.let { setAmmoAmount(it, reloadAmount ) }
+        item.itemStack.itemMeta = item.itemStack.itemMeta?.let { setAmmoAmount(it, reloadAmount) }
         e.isCancelled = true
     }
 }

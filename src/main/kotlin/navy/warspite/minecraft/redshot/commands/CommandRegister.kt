@@ -19,8 +19,8 @@ object CommandRegister : CommandExecutor {
                     colouredText(
                         """
                             &r--------- &cRedShot &r----------------
-                            &c/redshot get &r<&cID&r>
-                            &c/redshot give &r<&cPlayer&r> <&cID&r>
+                            &r/redshot get <&cWeapon ID&r>
+                            &r/redshot give <&cPlayer&r> <&cWeapon ID&r>
                         """.trimIndent()
                     )
                 )

@@ -3,10 +3,10 @@ package navy.warspite.minecraft.redshot.util
 import org.bukkit.ChatColor
 
 object GetColoured {
-    fun colouredMessage(text: String): String {
-        return ChatColor.translateAlternateColorCodes('&', "&r[&cRedShot&r] $text")
+    fun colouredMessage(string: String): String {
+        return ChatColor.translateAlternateColorCodes('&', """&r[&cRedShot&r] $string""")
     }
-    fun colouredText(text: String): String {
-        return ChatColor.translateAlternateColorCodes('&', text)
+    fun colouredText(string: String): String {
+        return ChatColor.translateAlternateColorCodes('&', string)
     }
 }

@@ -4,6 +4,7 @@ import navy.warspite.minecraft.redshot.LoadWeapons
 import navy.warspite.minecraft.redshot.Main
 import navy.warspite.minecraft.redshot.util.GetColoured.colouredMessage
 import navy.warspite.minecraft.redshot.util.GetColoured.colouredText
+import navy.warspite.minecraft.redshot.util.PlaySound.playSound
 import org.bukkit.*
 import org.bukkit.entity.Player
 import org.bukkit.entity.Snowball
@@ -39,23 +40,6 @@ object ShotEvent : Listener {
         } else null)
     }
 
-    private fun playSound(sounds: ArrayList<*>, player: Player) {
-        sounds.forEach {
-            it as String
-            val soundParam = it.split('-')
-            Bukkit.getScheduler().runTaskLater(
-                plugin, Runnable {
-                    player.location.world?.playSound(
-                        player.location,
-                        Sound.valueOf(soundParam[0]),
-                        soundParam[1].toFloat(),
-                        soundParam[2].toFloat()
-                    )
-                }, soundParam[3].toLong()
-            )
-        }
-    }
-
     @EventHandler
     fun catchWeaponsEvent(e: PlayerInteractEvent) {
         if (shootCount[e.player.name] == null) shootCount[e.player.name] = 0
@@ -63,12 +47,12 @@ object ShotEvent : Listener {
         if (zoomingPlayer[e.player.name] == null) zoomingPlayer[e.player.name] = false
         if (reloadingPlayer[e.player.name] == null) reloadingPlayer[e.player.name] = false
 
-        if (e.action == Action.RIGHT_CLICK_AIR ||
-            e.action == Action.RIGHT_CLICK_BLOCK
-        ) shot(e.player)
-        if (e.action == Action.LEFT_CLICK_AIR ||
-            e.action == Action.LEFT_CLICK_BLOCK
-        ) playerToggleZoomEvent(e.player)
+        if (e.action == Action.RIGHT_CLICK_AIR || e.action == Action.RIGHT_CLICK_BLOCK) {
+            shot(e.player)
+        }
+        if (e.action == Action.LEFT_CLICK_AIR || e.action == Action.LEFT_CLICK_BLOCK) {
+            playerToggleZoomEvent(e.player)
+        }
     }
 
     private fun playerToggleZoomEvent(player: Player) {

@@ -16,7 +16,7 @@ object GetWeapon : CommandExecutor {
         return if (sender is Player) {
             val plugin = Main.instance
             if (args.size < 2) {
-                sender.sendMessage(colouredMessage("Please enter weapons ID."))
+                sender.sendMessage(colouredMessage("Please enter ID of weapon."))
                 return false
             }
             val item = GenerateItemStack.generate(args[1])

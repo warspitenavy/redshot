@@ -57,10 +57,13 @@ object ShotEvent : Listener {
 
     private fun playerToggleZoomEvent(player: Player) {
 //        if (zoomingPlayer[player.name]!!) return
-        val id =
-            if (checkWeapon(player.inventory.itemInMainHand) != null) {
-                checkWeapon(player.inventory.itemInMainHand) as String
-            } else return
+//        val id =
+//            if (checkWeapon(player.inventory.itemInMainHand) != null) {
+//                checkWeapon(player.inventory.itemInMainHand) as String
+//            } else return
+        val id = GetMeta.getMeta(player.inventory.itemInMainHand, "weaponId", "STRING") ?: return
+        id as String
+
         val weapon = LoadWeapons.weaponsHashMap[id] as LinkedHashMap<*, *>? ?: return
         val scope = weapon["scope"] as LinkedHashMap<*, *>? ?: return
         val zoomAmount = (scope["zoomAmount"] ?: 1) as Int
@@ -115,10 +118,12 @@ object ShotEvent : Listener {
     }
 
     private fun shot(player: Player) {
-        val id =
-            if (checkWeapon(player.inventory.itemInMainHand) != null) {
-                checkWeapon(player.inventory.itemInMainHand) as String
-            } else return
+//        val id =
+//            if (checkWeapon(player.inventory.itemInMainHand) != null) {
+//                checkWeapon(player.inventory.itemInMainHand) as String
+//            } else return
+        val id = GetMeta.getMeta(player.inventory.itemInMainHand, "weaponId", "STRING") ?: return
+        id as String
 
         val weapon = LoadWeapons.weaponsHashMap[id] as LinkedHashMap<*, *>? ?: return
 
@@ -244,9 +249,11 @@ object ShotEvent : Listener {
     @EventHandler
     fun manualReloadEvent(e: PlayerDropItemEvent) {
         val item = e.itemDrop
-        val id =
-            if (checkWeapon(item.itemStack) != null) checkWeapon(item.itemStack) as String
-            else return
+//        val id =
+//            if (checkWeapon(item.itemStack) != null) checkWeapon(item.itemStack) as String
+//            else return
+        val id = GetMeta.getMeta(item.itemStack, "weaponId", "STRING") ?: return
+        id as String
         val weapon = LoadWeapons.weaponsHashMap[id] as LinkedHashMap<*, *>? ?: return
         val reload = weapon["reload"] as LinkedHashMap<*, *>? ?: return
         val reloadAmount = reload["reloadAmount"] as Int? ?: return

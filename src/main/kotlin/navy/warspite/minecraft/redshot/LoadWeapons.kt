@@ -10,6 +10,7 @@ object LoadWeapons {
     val weaponsHashMap = linkedMapOf<String, Any>()
 
     fun generateMap() {
+        weaponsHashMap.clear()
         val weaponsYaml = loadWeapon()
         weaponsYaml.forEach { (k, v) ->
             val data = linkedMapOf<String, Any>()

@@ -6,19 +6,18 @@ import java.nio.file.Path
 import java.nio.file.Paths
 
 object LoadWeapons {
-    private val plugin = Main.instance
-    val weaponsHashMap = linkedMapOf<String, Any>()
+    val weaponsAnyMap = linkedMapOf<String, Any>()
 
     fun generateMap() {
-        weaponsHashMap.clear()
+        weaponsAnyMap.clear()
         val weaponsYaml = loadWeapon()
         weaponsYaml.forEach { (k, v) ->
             val data = linkedMapOf<String, Any>()
             v as LinkedHashMap<*, *>
             v.forEach { data["${it.key}"] = it.value }
-            weaponsHashMap[k] = data
+            weaponsAnyMap[k] = data
         }
-        plugin.logger.info("Loaded weapons: ${weaponsHashMap.keys}")
+        Main.instance.logger.info("Loaded weapons: ${weaponsAnyMap.keys}")
     }
 
     private fun loadWeapon(): LinkedHashMap<String, Any> {

@@ -64,7 +64,7 @@ object ShotEvent : Listener {
         val id = GetMeta.getMeta(player.inventory.itemInMainHand, "weaponId", "STRING") ?: return
         id as String
 
-        val weapon = LoadWeapons.weaponsHashMap[id] as LinkedHashMap<*, *>? ?: return
+        val weapon = LoadWeapons.weaponsAnyMap[id] as LinkedHashMap<*, *>? ?: return
         val scope = weapon["scope"] as LinkedHashMap<*, *>? ?: return
         val zoomAmount = (scope["zoomAmount"] ?: 1) as Int
         val toggleZoomSounds = scope["toggleZoomSounds"] as ArrayList<*>?
@@ -101,7 +101,7 @@ object ShotEvent : Listener {
             container.get(weaponIdKey, PersistentDataType.STRING)
         } else return itemMeta
 
-        val weapon = LoadWeapons.weaponsHashMap[id] as LinkedHashMap<*, *>?
+        val weapon = LoadWeapons.weaponsAnyMap[id] as LinkedHashMap<*, *>?
             ?: return itemMeta
         val itemInformation = weapon["itemInformation"] ?: return itemMeta
         itemInformation as LinkedHashMap<*, *>
@@ -125,7 +125,7 @@ object ShotEvent : Listener {
         val id = GetMeta.getMeta(player.inventory.itemInMainHand, "weaponId", "STRING") ?: return
         id as String
 
-        val weapon = LoadWeapons.weaponsHashMap[id] as LinkedHashMap<*, *>? ?: return
+        val weapon = LoadWeapons.weaponsAnyMap[id] as LinkedHashMap<*, *>? ?: return
 
         val shooting = weapon["shooting"] as LinkedHashMap<*, *>?
         if (shooting == null) {
@@ -254,7 +254,7 @@ object ShotEvent : Listener {
 //            else return
         val id = GetMeta.getMeta(item.itemStack, "weaponId", "STRING") ?: return
         id as String
-        val weapon = LoadWeapons.weaponsHashMap[id] as LinkedHashMap<*, *>? ?: return
+        val weapon = LoadWeapons.weaponsAnyMap[id] as LinkedHashMap<*, *>? ?: return
         val reload = weapon["reload"] as LinkedHashMap<*, *>? ?: return
         val reloadAmount = reload["reloadAmount"] as Int? ?: return
         item.itemStack.itemMeta = item.itemStack.itemMeta?.let { setAmmoAmount(it, reloadAmount) }

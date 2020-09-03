@@ -2,7 +2,6 @@ package navy.warspite.minecraft.redshot
 
 import navy.warspite.minecraft.redshot.util.GetColoured.colouredMessage
 import navy.warspite.minecraft.redshot.util.GetColoured.colouredText
-import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
 import org.bukkit.inventory.ItemStack
@@ -11,7 +10,7 @@ import org.bukkit.persistence.PersistentDataType
 object GenerateItemStack {
     private val plugin = Main.instance
     fun generate(key: String): Any {
-        val weapon = LoadWeapons.weaponsHashMap[key]
+        val weapon = LoadWeapons.weaponsAnyMap[key]
             ?: return colouredMessage("Weapon do not exist.")
         weapon as LinkedHashMap<*, *>
 

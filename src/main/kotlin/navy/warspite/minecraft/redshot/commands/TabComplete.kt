@@ -22,7 +22,7 @@ object TabComplete: TabCompleter {
             2 -> {
                 val weapons = mutableListOf<String>()
                 if (args[0] == "get") {
-                    LoadWeapons.weaponsHashMap.keys.forEach{ weapons.add(it) }
+                    LoadWeapons.weaponsAnyMap.keys.forEach{ weapons.add(it) }
                 }
                 return weapons
             }

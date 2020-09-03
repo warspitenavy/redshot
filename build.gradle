@@ -1,6 +1,8 @@
 plugins {
     id 'java'
     id 'org.jetbrains.kotlin.jvm' version '1.4.0'
+//    id 'org.jetbrains.kotlin.multiplatform' version '1.4.0'
+    id 'org.jetbrains.kotlin.plugin.serialization' version '1.4.0'
 }
 
 group 'navy.warspite.minecraft.redshot'
@@ -14,10 +16,15 @@ repositories {
     maven {
         url "https://oss.sonatype.org/content/repositories/snapshots"
     }
+    maven {
+        url "https://kotlin.bintray.com/kotlinx"
+    }
 }
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib"
+    compile "com.charleskorn.kaml:kaml:0.21.0"
+    compile "org.jetbrains.kotlinx:kotlinx-serialization-core:1.0.0-RC"
     implementation "org.spigotmc:spigot-api:1.16.2-R0.1-SNAPSHOT"
 }
 

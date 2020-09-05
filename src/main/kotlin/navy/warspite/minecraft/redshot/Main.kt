@@ -17,6 +17,7 @@ class Main : JavaPlugin() {
         instance = this
         saveDefaultConfig()
         LoadWeapons.generateMap()
+        LoadJsons.generateWeapon()
         getCommand("redshot")?.setExecutor(CommandRegister)
         getCommand("redshot")?.tabCompleter = TabComplete
         server.pluginManager.registerEvents(ShotEvent, this)

@@ -17,7 +17,7 @@ object LoadWeapons {
             v.forEach { data["${it.key}"] = it.value }
             weaponsAnyMap[k] = data
         }
-        Main.instance.logger.info("Loaded weapons: ${weaponsAnyMap.keys}")
+        Main.instance.logger.info("Loaded weapons (YAML): ${weaponsAnyMap.keys}")
     }
 
     private fun loadWeapon(): LinkedHashMap<String, Any> {

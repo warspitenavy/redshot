@@ -7,9 +7,8 @@ import org.bukkit.entity.Player
 
 object PlaySound {
     private val plugin = Main.instance
-    fun playSound(sounds: ArrayList<*>, player: Player) {
+    fun playSound(sounds: ArrayList<String>, player: Player) {
         sounds.forEach {
-            it as String
             val soundParam = it.split('-')
             Bukkit.getScheduler().runTaskLater(
                 plugin, Runnable {

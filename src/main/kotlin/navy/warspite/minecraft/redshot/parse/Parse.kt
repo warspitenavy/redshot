@@ -6,6 +6,11 @@ object Parse {
     @Serializable
     data class Weapon (
         val id: String,
+        val parameters: Parameters
+    )
+
+    @Serializable
+    data class Parameters (
         val itemInformation: ItemInformation,
         val shooting: Shooting,
         val sneak: Sneak? = null,

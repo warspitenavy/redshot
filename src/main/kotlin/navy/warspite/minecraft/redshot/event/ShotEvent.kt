@@ -47,12 +47,12 @@ object ShotEvent : Listener {
         if (zoomingPlayer[e.player.name] == null) zoomingPlayer[e.player.name] = false
         if (reloadingPlayer[e.player.name] == null) reloadingPlayer[e.player.name] = false
 
-        if (e.action == Action.RIGHT_CLICK_AIR || e.action == Action.RIGHT_CLICK_BLOCK) {
-            shot(e.player)
-        }
-        if (e.action == Action.LEFT_CLICK_AIR || e.action == Action.LEFT_CLICK_BLOCK) {
-            playerToggleZoomEvent(e.player)
-        }
+//        if (e.action == Action.RIGHT_CLICK_AIR || e.action == Action.RIGHT_CLICK_BLOCK) {
+//            shot(e.player)
+//        }
+//        if (e.action == Action.LEFT_CLICK_AIR || e.action == Action.LEFT_CLICK_BLOCK) {
+//            playerToggleZoomEvent(e.player)
+//        }
     }
 
     private fun playerToggleZoomEvent(player: Player) {
@@ -61,7 +61,7 @@ object ShotEvent : Listener {
 //            if (checkWeapon(player.inventory.itemInMainHand) != null) {
 //                checkWeapon(player.inventory.itemInMainHand) as String
 //            } else return
-        val id = GetMeta.getMeta(player.inventory.itemInMainHand, "weaponId", "STRING") ?: return
+        val id = GetMeta.itemMetaL(player.inventory.itemInMainHand, "weaponId", "STRING") ?: return
         id as String
 
         val weapon = LoadWeapons.weaponsAnyMap[id] as LinkedHashMap<*, *>? ?: return
@@ -70,7 +70,7 @@ object ShotEvent : Listener {
         val toggleZoomSounds = scope["toggleZoomSounds"] as ArrayList<*>?
         val sight = (scope["sight"] ?: false) as Boolean
 
-        if (toggleZoomSounds != null) playSound(toggleZoomSounds, player)
+//        if (toggleZoomSounds != null) playSound(toggleZoomSounds, player)
         if (zoomingPlayer[player.name]!!) {
             zoomingPlayer[player.name] = false
             if (sight) player.inventory.helmet = ItemStack(Material.AIR)
@@ -122,7 +122,7 @@ object ShotEvent : Listener {
 //            if (checkWeapon(player.inventory.itemInMainHand) != null) {
 //                checkWeapon(player.inventory.itemInMainHand) as String
 //            } else return
-        val id = GetMeta.getMeta(player.inventory.itemInMainHand, "weaponId", "STRING") ?: return
+        val id = GetMeta.itemMetaL(player.inventory.itemInMainHand, "weaponId", "STRING") ?: return
         id as String
 
         val weapon = LoadWeapons.weaponsAnyMap[id] as LinkedHashMap<*, *>? ?: return
@@ -194,7 +194,7 @@ object ShotEvent : Listener {
                         )
                         snowball.velocity = velocity
                     }
-                    if (shootSounds != null) playSound(shootSounds, player)
+//                    if (shootSounds != null) playSound(shootSounds, player)
                 }
             }
         }
@@ -252,7 +252,7 @@ object ShotEvent : Listener {
 //        val id =
 //            if (checkWeapon(item.itemStack) != null) checkWeapon(item.itemStack) as String
 //            else return
-        val id = GetMeta.getMeta(item.itemStack, "weaponId", "STRING") ?: return
+        val id = GetMeta.itemMetaL(item.itemStack, "weaponId", "STRING") ?: return
         id as String
         val weapon = LoadWeapons.weaponsAnyMap[id] as LinkedHashMap<*, *>? ?: return
         val reload = weapon["reload"] as LinkedHashMap<*, *>? ?: return

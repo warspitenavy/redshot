@@ -2,6 +2,7 @@ package navy.warspite.minecraft.redshot
 
 import navy.warspite.minecraft.redshot.commands.CommandRegister
 import navy.warspite.minecraft.redshot.commands.TabComplete
+import navy.warspite.minecraft.redshot.event.CatchEvent
 import navy.warspite.minecraft.redshot.event.HitEvent
 import navy.warspite.minecraft.redshot.event.ShotEvent
 import org.bukkit.command.TabCompleter
@@ -20,6 +21,7 @@ class Main : JavaPlugin() {
         LoadJsons.generateWeapon()
         getCommand("redshot")?.setExecutor(CommandRegister)
         getCommand("redshot")?.tabCompleter = TabComplete
+        server.pluginManager.registerEvents(CatchEvent, this)
         server.pluginManager.registerEvents(ShotEvent, this)
         server.pluginManager.registerEvents(HitEvent, this)
     }

@@ -22,7 +22,7 @@ import org.bukkit.potion.PotionEffectType
 import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.util.Vector
 
-object ShotEvent : Listener {
+object _ShotEvent : Listener {
     private val plugin = Main.instance
     private val shootingPlayer = linkedMapOf<String, Boolean>()
     private val zoomingPlayer = linkedMapOf<String, Boolean>()

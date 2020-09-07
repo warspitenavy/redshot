@@ -27,8 +27,8 @@ object Messages {
             colouredText(
                 """
                     &r--------- &cRedShot &r----------------
-                            &r/redshot get <&cWeapon ID&r>
-                            &r/redshot give <&cPlayer&r> <&cWeapon ID&r>
+                    &r/redshot get <&cWeapon ID&r>
+                    &r/redshot give <&cPlayer&r> <&cWeapon ID&r>
                 """.trimIndent()
             )
         )

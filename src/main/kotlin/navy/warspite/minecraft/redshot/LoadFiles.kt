@@ -9,17 +9,17 @@ import java.nio.file.Paths
 object LoadFiles {
     val weaponJson = linkedMapOf<String, Parse.Parameters>()
 
-    fun generate() {
-        val jsons = loadWeapon()
+    fun load() {
+        val jsons = loadJsonObjects()
         weaponJson.clear()
         weaponJson.putAll(jsons)
 
         Main.instance.logger.info("Loaded Weapons (Json): ${jsons.keys}")
     }
 
-    private fun loadWeapon(): LinkedHashMap<String, Parse.Parameters> {
+    private fun loadJsonObjects(): LinkedHashMap<String, Parse.Parameters> {
         val jsons = linkedMapOf<String, Parse.Parameters>()
-        for (f in loadWeaponFiles()) {
+        for (f in loadJsonFiles()) {
             val file = f.toFile().readText()
             val data = Json.decodeFromString<List<Parse.Weapon>>(file)
             for (d in data) {
@@ -29,7 +29,7 @@ object LoadFiles {
         return jsons
     }
 
-    private fun loadWeaponFiles(): ArrayList<Path> {
+    private fun loadJsonFiles(): ArrayList<Path> {
         val dir = Paths.get("./plugins/RedShot/Weapons")
         val fileExtension = ".json"
         if (!Files.isDirectory(dir)) Files.createDirectory(dir)

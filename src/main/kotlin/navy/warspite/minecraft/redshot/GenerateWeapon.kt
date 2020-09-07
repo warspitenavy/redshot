@@ -22,7 +22,8 @@ object GenerateWeapon {
         itemMeta.persistentDataContainer.set(weaponId, PersistentDataType.STRING, key)
         itemMeta.persistentDataContainer.set(ammo, PersistentDataType.INTEGER, 0)
 
-        itemMeta.setDisplayName(colouredText("""${itemInformation.itemName} □ «0»""")) //アイテム名
+//        itemMeta.setDisplayName(colouredText("""${itemInformation.itemName} □ «0»""")) //アイテム名
+        itemMeta.setDisplayName(colouredText(itemInformation.itemName)) //アイテム名
 
         val lore = arrayListOf<String>()
         itemInformation.itemLore.forEach { lore.add(colouredText(it)) }
@@ -33,9 +34,7 @@ object GenerateWeapon {
         return itemStack
     }
     fun sounds(key: String): ArrayList<String>? {
-        val sounds = arrayListOf<String>()
         val weapon = LoadFiles.weaponJson[key] ?: return null
-        weapon.itemInformation.soundsAcquired.forEach { sounds.add(it) }
-        return sounds
+        return weapon.itemInformation.soundsAcquired
     }
 }

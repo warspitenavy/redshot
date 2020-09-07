@@ -15,7 +15,7 @@ class Main : JavaPlugin() {
     override fun onEnable() {
         instance = this
         saveDefaultConfig()
-        LoadFiles.generate()
+        LoadFiles.load()
         getCommand("redshot")?.setExecutor(CommandRegister)
         getCommand("redshot")?.tabCompleter = TabComplete
         server.pluginManager.registerEvents(CatchEvent, this)

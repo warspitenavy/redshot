@@ -7,12 +7,17 @@ import org.bukkit.Bukkit
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
+import org.bukkit.entity.Player
 
 object GiveWeapon : CommandExecutor {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
-        when {
+        return when {
             args.size > 2 -> {
-                val player = Bukkit.getPlayerExact(args[1]) ?: return false
+                val player = Bukkit.getPlayerExact(args[1])
+                if (player == null) {
+                    Messages.missingPlayer(sender)
+                    return false
+                }
                 for (arg in args.copyOfRange(2, args.size)) {
                     val weapon = GenerateWeapon.itemStack(arg)
                     if (weapon == null) {
@@ -22,20 +27,17 @@ object GiveWeapon : CommandExecutor {
                     player.inventory.addItem(weapon)
                     GenerateWeapon.sounds(arg)?.let { PlaySound.play(it, player) }
                 }
-                return true
+                true
             }
             args.size > 1 -> {
                 val player = Bukkit.getPlayerExact(args[1])
-                if (player == null) {
-                    sender.sendMessage(colouredMessage("Missing player."))
-                    return false
-                }
-                sender.sendMessage(colouredMessage("Please enter ID of weapon."))
-                return false
+                if (player == null) Messages.missingPlayer(sender)
+                else Messages.notEnteredWeapon(sender)
+                false
             }
             else -> {
-                sender.sendMessage(colouredMessage("Please enter player name."))
-                return false
+                Messages.missingPlayer(sender)
+                false
             }
         }
     }

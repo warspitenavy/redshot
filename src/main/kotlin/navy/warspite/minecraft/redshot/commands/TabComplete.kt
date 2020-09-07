@@ -15,13 +15,6 @@ object TabComplete : TabCompleter {
         args: Array<out String>
     ): MutableList<String>? {
         return when {
-//            args.size > 3 -> {
-//                when (args[0]) {
-//                    "get" -> LoadJsons.weaponJson.keys.toMutableList()
-//                    "give" -> LoadJsons.weaponJson.keys.toMutableList()
-//                    else -> mutableListOf()
-//                }
-//            }
             args.size > 2 -> {
                 when (args[0]) {
                     "get" -> LoadFiles.weaponJson.keys.toMutableList()

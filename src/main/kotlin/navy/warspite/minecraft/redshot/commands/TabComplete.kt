@@ -6,7 +6,6 @@ import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabCompleter
 
-
 object TabComplete : TabCompleter {
     private val commands = CommandRegister.commands.keys
     override fun onTabComplete(
@@ -16,16 +15,21 @@ object TabComplete : TabCompleter {
         args: Array<out String>
     ): MutableList<String>? {
         return when {
-            3 < args.size -> {
-                mutableListOf()
-            }
-            2 < args.size -> {
+//            args.size > 3 -> {
+//                when (args[0]) {
+//                    "get" -> LoadJsons.weaponJson.keys.toMutableList()
+//                    "give" -> LoadJsons.weaponJson.keys.toMutableList()
+//                    else -> mutableListOf()
+//                }
+//            }
+            args.size > 2 -> {
                 when (args[0]) {
+                    "get" -> LoadJsons.weaponJson.keys.toMutableList()
                     "give" -> LoadJsons.weaponJson.keys.toMutableList()
                     else -> mutableListOf()
                 }
             }
-            1 < args.size -> {
+            args.size > 1 -> {
                 when (args[0]) {
                     "get" -> LoadJsons.weaponJson.keys.toMutableList()
                     "give" -> Bukkit.getOnlinePlayers().map { it.name }.toMutableList()

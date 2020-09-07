@@ -4,13 +4,11 @@ import navy.warspite.minecraft.redshot.LoadWeapons
 import navy.warspite.minecraft.redshot.Main
 import navy.warspite.minecraft.redshot.util.GetColoured.colouredMessage
 import navy.warspite.minecraft.redshot.util.GetColoured.colouredText
-import navy.warspite.minecraft.redshot.util.PlaySound.playSound
 import org.bukkit.*
 import org.bukkit.entity.Player
 import org.bukkit.entity.Snowball
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
-import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerDropItemEvent
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.inventory.ItemStack

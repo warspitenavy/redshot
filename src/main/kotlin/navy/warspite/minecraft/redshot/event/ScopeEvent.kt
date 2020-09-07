@@ -24,7 +24,7 @@ object ScopeEvent {
     fun zoom(player: Player, scope: Parse.Scope) {
         CatchEvent.scopingPlayer[player] = true
         if (scope.sight) player.inventory.helmet = ItemStack(Material.CARVED_PUMPKIN)
-        PlaySound.playSound(scope.toggleZoomSounds, player)
+        PlaySound.play(scope.toggleZoomSounds, player)
         player.addPotionEffect(PotionEffect(PotionEffectType.SLOW, Int.MAX_VALUE, scope.zoomAmount))
         return
     }
@@ -32,7 +32,7 @@ object ScopeEvent {
     fun quitZoom(player: Player, scope: Parse.Scope) {
         CatchEvent.scopingPlayer[player] = false
         player.inventory.helmet = ItemStack(Material.AIR)
-        PlaySound.playSound(scope.toggleZoomSounds, player)
+        PlaySound.play(scope.toggleZoomSounds, player)
         player.removePotionEffect(PotionEffectType.SLOW)
         return
     }

@@ -36,7 +36,7 @@ object ShootEvent {
                     accuracy
                 )
             }
-            if (shooting.shootSounds != null) PlaySound.playSound(shooting.shootSounds, player)
+            if (shooting.shootSounds != null) PlaySound.play(shooting.shootSounds, player)
         }
 
         fun burstShoot() {

@@ -22,7 +22,7 @@ object GetCommand : CommandExecutor {
                 true
             }
             else -> {
-                Messages.doesNotExist(sender)
+                Messages.notEnteredWeapon(sender)
                 false
             }
         }

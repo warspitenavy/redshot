@@ -10,8 +10,9 @@ import org.bukkit.plugin.java.JavaPlugin
 class Main : JavaPlugin() {
     companion object {
         lateinit var instance: Plugin
-        private set
+            private set
     }
+
     override fun onEnable() {
         instance = this
         saveDefaultConfig()

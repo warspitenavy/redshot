@@ -33,4 +33,8 @@ object Messages {
             )
         )
     }
+
+    fun reloadedConfig(sender: CommandSender) {
+        sender.sendMessage(colouredMessage("You have reloaded config."))
+    }
 }

@@ -16,11 +16,11 @@ object ScopeEvent {
         val scope = LoadFiles.weaponJson[weaponId]?.scope ?: return
         if (CatchEvent.scopingPlayer[player]!!) {
             quitZoom(player, scope)
-        }
-        else {
+        } else {
             zoom(player, scope)
         }
     }
+
     fun zoom(player: Player, scope: Parse.Scope) {
         CatchEvent.scopingPlayer[player] = true
         if (scope.sight) player.inventory.helmet = ItemStack(Material.CARVED_PUMPKIN)
@@ -36,6 +36,7 @@ object ScopeEvent {
         player.removePotionEffect(PotionEffectType.SLOW)
         return
     }
+
     fun quitZoom(player: Player) {
         CatchEvent.scopingPlayer[player] = false
         player.inventory.helmet = ItemStack(Material.AIR)

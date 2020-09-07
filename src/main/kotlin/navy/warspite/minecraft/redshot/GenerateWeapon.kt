@@ -33,6 +33,7 @@ object GenerateWeapon {
 
         return itemStack
     }
+
     fun sounds(key: String): ArrayList<String>? {
         val weapon = LoadFiles.weaponJson[key] ?: return null
         return weapon.itemInformation.soundsAcquired

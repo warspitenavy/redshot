@@ -71,8 +71,9 @@ object ShootEvent {
     private fun projectile(type: String, speed: Int, damage: Int, player: Player, accuracy: Double) {
         val projectile = when (type) {
             "snowball" -> player.launchProjectile(Snowball::class.java)
+            "arrow" -> player.launchProjectile(Arrow::class.java)
             "egg" -> player.launchProjectile(Egg::class.java)
-            "witherSkull" -> player.launchProjectile(WitherSkull::class.java)
+            "witherskull" -> player.launchProjectile(WitherSkull::class.java)
             else -> player.launchProjectile(Snowball::class.java)
         }
         projectile.setMetadata(
@@ -93,7 +94,7 @@ object ShootEvent {
             Vector(
                 Math.random() * accuracy,
                 Math.random() * accuracy,
-                Math.random() * accuracy
+                0.0
             )
         )
         projectile.velocity = velocity

@@ -4,13 +4,13 @@ import kotlinx.serialization.Serializable
 
 object Parse {
     @Serializable
-    data class Weapon (
+    data class Weapon(
         val id: String,
         val parameters: Parameters
     )
 
     @Serializable
-    data class Parameters (
+    data class Parameters(
         val itemInformation: ItemInformation,
         val shooting: Shooting,
         val sneak: Sneak? = null,
@@ -20,7 +20,7 @@ object Parse {
     )
 
     @Serializable
-    data class ItemInformation (
+    data class ItemInformation(
         val itemName: String,
         val itemType: String,
         val itemLore: ArrayList<String> = arrayListOf(),
@@ -29,7 +29,7 @@ object Parse {
     )
 
     @Serializable
-    data class Shooting (
+    data class Shooting(
         val delayBetweenShots: Int = 4,
         val projectileAmount: Int = 1,
         val projectileSpeed: Int = 20,
@@ -43,7 +43,7 @@ object Parse {
     )
 
     @Serializable
-    data class Sneak (
+    data class Sneak(
         val recoil: Boolean = true,
         val recoilX: Double = 0.0,
         val recoilY: Double = 0.0,
@@ -51,13 +51,13 @@ object Parse {
     )
 
     @Serializable
-    data class BurstFire (
+    data class BurstFire(
         val shotsPerBurst: Int,
         val delayBetweenShotsInBurst: Int,
     )
 
     @Serializable
-    data class Reload (
+    data class Reload(
         val reloadAmount: Int = 0,
         val reloadDuration: Int = 0,
         val outOfAmmoSounds: ArrayList<String> = arrayListOf(),
@@ -65,7 +65,7 @@ object Parse {
     )
 
     @Serializable
-    data class Scope (
+    data class Scope(
         val sight: Boolean = false,
         val zoomAmount: Int = 0,
         val bulletSpread: Double = 0.0,

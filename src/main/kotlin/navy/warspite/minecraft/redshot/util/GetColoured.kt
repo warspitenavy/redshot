@@ -6,6 +6,7 @@ object GetColoured {
     fun colouredMessage(string: String): String {
         return ChatColor.translateAlternateColorCodes('&', """&r[&cRedShot&r] $string""")
     }
+
     fun colouredText(string: String): String {
         return ChatColor.translateAlternateColorCodes('&', string)
     }

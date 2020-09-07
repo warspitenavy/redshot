@@ -21,9 +21,7 @@ object CommandRegister : CommandExecutor {
                 commands[args[0]]?.onCommand(sender, command, label, args)
                 true
             }
-            else -> {
-                false
-            }
+            else -> false
         }
     }
 }

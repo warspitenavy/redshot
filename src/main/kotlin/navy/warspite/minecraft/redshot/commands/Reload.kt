@@ -10,7 +10,7 @@ object Reload : CommandExecutor {
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         LoadFiles.load()
-        sender.sendMessage(colouredMessage("Reloaded weapons."))
+        Messages.reloadedConfig(sender)
         return true
     }
 }

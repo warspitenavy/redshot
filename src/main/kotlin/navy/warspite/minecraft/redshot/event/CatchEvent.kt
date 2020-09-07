@@ -11,7 +11,7 @@ import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.player.PlayerItemHeldEvent
 import org.bukkit.event.player.PlayerSwapHandItemsEvent
 
-object CatchEvent : Listener{
+object CatchEvent : Listener {
     private val plugin = Main.instance
     val shootingPlayer = linkedMapOf<Player, Boolean>()
     val scopingPlayer = linkedMapOf<Player, Boolean>()

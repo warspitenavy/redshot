@@ -1,6 +1,7 @@
 package navy.warspite.minecraft.redshot.commands
 
 import navy.warspite.minecraft.redshot.util.GetColoured.colouredMessage
+import navy.warspite.minecraft.redshot.util.GetColoured.colouredText
 import org.bukkit.command.CommandSender
 
 object Messages {
@@ -19,5 +20,17 @@ object Messages {
 
     fun playersCommand(sender: CommandSender) {
         sender.sendMessage(colouredMessage("This is players command."))
+    }
+
+    fun commands(sender: CommandSender) {
+        sender.sendMessage(
+            colouredText(
+                """
+                    &r--------- &cRedShot &r----------------
+                            &r/redshot get <&cWeapon ID&r>
+                            &r/redshot give <&cPlayer&r> <&cWeapon ID&r>
+                """.trimIndent()
+            )
+        )
     }
 }

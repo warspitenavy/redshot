@@ -8,7 +8,7 @@ import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
-object GetWeapon : CommandExecutor {
+object GetCommand : CommandExecutor {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         if (sender !is Player) {
             Messages.playersCommand(sender)
@@ -17,13 +17,7 @@ object GetWeapon : CommandExecutor {
         return when {
             args.size > 1 -> {
                 for (arg in args.copyOfRange(1, args.size)) {
-                    val weapon = GenerateWeapon.itemStack(arg)
-                    if (weapon == null) {
-                        Messages.doesNotExist(sender, arg)
-                        continue
-                    }
-                    sender.inventory.addItem(weapon)
-                    GenerateWeapon.sounds(arg)?.let { PlaySound.play(it, sender) }
+                    GiveWeapon.give(sender, arg)
                 }
                 true
             }

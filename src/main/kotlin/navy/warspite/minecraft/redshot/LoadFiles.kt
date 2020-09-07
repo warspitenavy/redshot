@@ -2,15 +2,14 @@ package navy.warspite.minecraft.redshot
 
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import navy.warspite.minecraft.redshot.parse.Parse
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
-object LoadJsons {
+object LoadFiles {
     val weaponJson = linkedMapOf<String, Parse.Parameters>()
 
-    fun generateWeapon() {
+    fun generate() {
         val jsons = loadWeapon()
         weaponJson.clear()
         weaponJson.putAll(jsons)

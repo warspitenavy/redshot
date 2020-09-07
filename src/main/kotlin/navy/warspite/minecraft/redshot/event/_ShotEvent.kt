@@ -1,6 +1,5 @@
 package navy.warspite.minecraft.redshot.event
 
-import navy.warspite.minecraft.redshot.LoadWeapons
 import navy.warspite.minecraft.redshot.Main
 import navy.warspite.minecraft.redshot.util.GetColoured.colouredMessage
 import navy.warspite.minecraft.redshot.util.GetColoured.colouredText

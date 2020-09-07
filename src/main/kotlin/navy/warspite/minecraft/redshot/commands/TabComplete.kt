@@ -1,6 +1,6 @@
 package navy.warspite.minecraft.redshot.commands
 
-import navy.warspite.minecraft.redshot.LoadJsons
+import navy.warspite.minecraft.redshot.LoadFiles
 import org.bukkit.Bukkit
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
@@ -24,14 +24,14 @@ object TabComplete : TabCompleter {
 //            }
             args.size > 2 -> {
                 when (args[0]) {
-                    "get" -> LoadJsons.weaponJson.keys.toMutableList()
-                    "give" -> LoadJsons.weaponJson.keys.toMutableList()
+                    "get" -> LoadFiles.weaponJson.keys.toMutableList()
+                    "give" -> LoadFiles.weaponJson.keys.toMutableList()
                     else -> mutableListOf()
                 }
             }
             args.size > 1 -> {
                 when (args[0]) {
-                    "get" -> LoadJsons.weaponJson.keys.toMutableList()
+                    "get" -> LoadFiles.weaponJson.keys.toMutableList()
                     "give" -> Bukkit.getOnlinePlayers().map { it.name }.toMutableList()
                     else -> mutableListOf()
                 }

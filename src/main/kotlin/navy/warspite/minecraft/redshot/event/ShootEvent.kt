@@ -1,6 +1,6 @@
 package navy.warspite.minecraft.redshot.event
 
-import navy.warspite.minecraft.redshot.LoadJsons
+import navy.warspite.minecraft.redshot.LoadFiles
 import navy.warspite.minecraft.redshot.Main
 import navy.warspite.minecraft.redshot.util.PlaySound
 import org.bukkit.Bukkit
@@ -16,7 +16,7 @@ object ShootEvent {
 
         val itemMeta = player.inventory.itemInMainHand.itemMeta ?: return
         val weaponId = GetMeta.weaponId(itemMeta) ?: return
-        val weapon = LoadJsons.weaponJson[weaponId] ?: return
+        val weapon = LoadFiles.weaponJson[weaponId] ?: return
         val shooting = weapon.shooting
         val sneak = weapon.sneak
         val scope = weapon.scope

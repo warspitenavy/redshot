@@ -1,4 +1,4 @@
-package navy.warspite.minecraft.redshot.parse
+package navy.warspite.minecraft.redshot
 
 import kotlinx.serialization.Serializable
 

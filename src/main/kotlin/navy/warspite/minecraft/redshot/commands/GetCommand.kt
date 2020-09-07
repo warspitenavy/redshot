@@ -22,7 +22,7 @@ object GetCommand : CommandExecutor {
                 true
             }
             else -> {
-                Messages.missingPlayer(sender)
+                Messages.doesNotExist(sender)
                 false
             }
         }

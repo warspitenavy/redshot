@@ -18,7 +18,6 @@ class Main : JavaPlugin() {
         saveDefaultConfig()
         LoadWeapons.generateMap()
         LoadJsons.generateWeapon()
-        // commit test
         getCommand("redshot")?.setExecutor(CommandRegister)
         getCommand("redshot")?.tabCompleter = TabComplete
         server.pluginManager.registerEvents(CatchEvent, this)

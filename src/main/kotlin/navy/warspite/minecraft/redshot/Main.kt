@@ -21,7 +21,6 @@ class Main : JavaPlugin() {
         getCommand("redshot")?.setExecutor(CommandRegister)
         getCommand("redshot")?.tabCompleter = TabComplete
         server.pluginManager.registerEvents(CatchEvent, this)
-        server.pluginManager.registerEvents(_ShotEvent, this)
         server.pluginManager.registerEvents(HitEvent, this)
     }
 }

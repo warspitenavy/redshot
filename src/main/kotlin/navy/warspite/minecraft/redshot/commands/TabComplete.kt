@@ -1,10 +1,11 @@
 package navy.warspite.minecraft.redshot.commands
 
 import navy.warspite.minecraft.redshot.LoadJsons
-import navy.warspite.minecraft.redshot.LoadWeapons
+import org.bukkit.Bukkit
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabCompleter
+
 
 object TabComplete : TabCompleter {
     private val commands = CommandRegister.commands.keys
@@ -14,20 +15,27 @@ object TabComplete : TabCompleter {
         alias: String,
         args: Array<out String>
     ): MutableList<String>? {
-        val commands = mutableListOf<String>()
-        this.commands.forEach { commands.add(it) }
-        when (args.size) {
-            1 -> {
-                return commands
+        return when {
+            3 < args.size -> {
+                mutableListOf()
             }
-            2 -> {
-                val weapons = mutableListOf<String>()
-                if (args[0] == "get") {
-                    LoadJsons.weaponJson.forEach { weapons.add(it.key) }
+            2 < args.size -> {
+                when (args[0]) {
+                    "give" -> LoadJsons.weaponJson.keys.toMutableList()
+                    else -> mutableListOf()
                 }
-                return weapons
             }
+            1 < args.size -> {
+                when (args[0]) {
+                    "get" -> LoadJsons.weaponJson.keys.toMutableList()
+                    "give" -> Bukkit.getOnlinePlayers().map { it.name }.toMutableList()
+                    else -> mutableListOf()
+                }
+            }
+            args.isNotEmpty() -> {
+                this.commands.toMutableList()
+            }
+            else -> null
         }
-        return null
     }
 }

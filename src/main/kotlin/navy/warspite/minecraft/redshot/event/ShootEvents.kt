@@ -2,14 +2,17 @@ package navy.warspite.minecraft.redshot.event
 
 import navy.warspite.minecraft.redshot.LoadFiles
 import navy.warspite.minecraft.redshot.Main
+import navy.warspite.minecraft.redshot.Parse
 import navy.warspite.minecraft.redshot.util.PlaySound
 import org.bukkit.Bukkit
+import org.bukkit.Sound
 import org.bukkit.entity.*
+import org.bukkit.inventory.meta.ItemMeta
 import org.bukkit.metadata.FixedMetadataValue
 import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.util.Vector
 
-object ShootEvent {
+object ShootEvents {
     private val plugin = Main.instance
     fun shooting(player: Player) {
         if (CatchEvent.shootingPlayer[player]!!) return
@@ -24,19 +27,19 @@ object ShootEvent {
 
         fun shoot() {
             val accuracy =
-                if (CatchEvent.scopingPlayer[player]!!) scope?.bulletSpread ?: 0.0
-                else if (player.isSneaking) sneak?.bulletSpread ?: 0.0
-                else shooting.bulletSpread
+                when {
+                    CatchEvent.scopingPlayer[player]!! -> scope?.bulletSpread ?: 0.0
+                    player.isSneaking -> sneak?.bulletSpread ?: 0.0
+                    else -> shooting.bulletSpread
+                }
             for (i in 1..shooting.projectileAmount) {
                 projectile(
-                    shooting.projectileType,
-                    shooting.projectileSpeed,
-                    shooting.projectileDamage,
+                    weapon,
                     player,
                     accuracy
                 )
             }
-            if (shooting.shootSounds != null) PlaySound.play(shooting.shootSounds, player)
+            if (shooting.shootSounds != null) PlaySound.playByList(shooting.shootSounds, player)
         }
 
         fun burstShoot() {
@@ -68,8 +71,50 @@ object ShootEvent {
         }
     }
 
-    private fun projectile(type: String, speed: Int, damage: Int, player: Player, accuracy: Double) {
-        val projectile = when (type) {
+    fun cancelReload(int: Int) {
+        Bukkit.getScheduler().cancelTask(int)
+    }
+
+    fun waitReload(player: Player, itemMeta: ItemMeta, reload: Parse.Reload) {
+        val ammo = GetMeta.ammo(itemMeta) ?: return
+        val fullyAmmo = reload.reloadAmount
+        if (ammo == fullyAmmo) return
+        if (CatchEvent.reloadingPlayer[player]!!) return
+
+        CatchEvent.reloadingPlayer[player] = true
+        val sounds = reload.reloadingSounds.map { it.split('-') }
+        var runCount = 0
+        object : BukkitRunnable() {
+            override fun run() {
+                if (runCount <= reload.reloadDuration) {
+                    if (!CatchEvent.scopingPlayer[player]!!) cancel()
+                    for (sound in sounds) {
+                        if (runCount == sound[3].toInt()) {
+                            PlaySound.playSound(
+                                player,
+                                Sound.valueOf(sound[0]),
+                                sound[1].toFloat(),
+                                sound[2].toFloat()
+                            )
+                        }
+                    }
+                    runCount++
+                } else {
+                    player.sendMessage("$runCount")
+                    CatchEvent.reloadingPlayer[player] = false
+                    cancel()
+                }
+            }
+        }.runTaskTimer(plugin, 0, 1)
+    }
+
+    fun reload(player: Player, itemMeta: ItemMeta, reload: Parse.Reload): ItemMeta {
+        itemMeta.setDisplayName("done")
+        return itemMeta
+    }
+
+    private fun projectile(weapon: Parse.Parameters, player: Player, accuracy: Double) {
+        val projectile = when (weapon.shooting.projectileType) {
             "snowball" -> player.launchProjectile(Snowball::class.java)
             "arrow" -> player.launchProjectile(Arrow::class.java)
             "egg" -> player.launchProjectile(Egg::class.java)
@@ -79,7 +124,7 @@ object ShootEvent {
         projectile.setMetadata(
             "damage", FixedMetadataValue(
                 plugin,
-                damage
+                weapon.shooting.projectileDamage
             )
         )
         projectile.setMetadata(
@@ -89,7 +134,7 @@ object ShootEvent {
             )
         )
         val velocity = player.location.direction
-        velocity.multiply(speed / 10.0)
+        velocity.multiply(weapon.shooting.projectileSpeed / 10.0)
         velocity.add(
             Vector(
                 Math.random() * accuracy,

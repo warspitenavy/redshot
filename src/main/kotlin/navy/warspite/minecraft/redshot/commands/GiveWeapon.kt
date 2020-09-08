@@ -11,7 +11,7 @@ object GiveWeapon {
             Messages.doesNotExist(player, string)
         } else {
             player.inventory.addItem(weapon)
-            GenerateWeapon.sounds(string)?.let { PlaySound.play(it, player) }
+            GenerateWeapon.sounds(string)?.let { PlaySound.playByList(it, player) }
         }
     }
 }

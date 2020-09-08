@@ -25,18 +25,13 @@ object GetMeta {
         }
     }
 
-    fun itemMetaL(itemStack: ItemStack, id: String, dataType: String): Any? {
-        val key = NamespacedKey(plugin, id)
-        val itemMeta = itemStack.itemMeta ?: return null
+    fun ammo(itemMeta: ItemMeta): Int? {
+        val key = NamespacedKey(plugin, "ammo")
         val container = itemMeta.persistentDataContainer
-        val type =
-            when (dataType) {
-                "STRING" -> PersistentDataType.STRING
-                "INTEGER" -> PersistentDataType.INTEGER
-                else -> return null
-            }
-        return (if (container.has(key, type)) {
-            container.get(key, type)
-        } else null)
+        return if (container.has(key, PersistentDataType.INTEGER)) {
+            container.get(key, PersistentDataType.INTEGER)
+        } else {
+            null
+        }
     }
 }

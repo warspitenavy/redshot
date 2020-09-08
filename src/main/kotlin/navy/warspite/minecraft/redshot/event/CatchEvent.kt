@@ -1,5 +1,7 @@
 package navy.warspite.minecraft.redshot.event
 
+import navy.warspite.minecraft.redshot.GenerateWeapon
+import navy.warspite.minecraft.redshot.LoadFiles
 import navy.warspite.minecraft.redshot.Main
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -27,7 +29,7 @@ object CatchEvent : Listener {
 
         if (e.action == Action.RIGHT_CLICK_AIR || e.action == Action.RIGHT_CLICK_BLOCK) {
             val itemMeta = e.player.inventory.itemInMainHand.itemMeta ?: return
-            if (GetMeta.isWeapon(itemMeta)) ShootEvent.shooting(e.player)
+            if (GetMeta.isWeapon(itemMeta)) ShootEvents.shooting(e.player)
             else return
         }
         if (e.action == Action.LEFT_CLICK_AIR || e.action == Action.LEFT_CLICK_BLOCK) {
@@ -45,6 +47,13 @@ object CatchEvent : Listener {
 
     @EventHandler
     private fun dropEvent(e: PlayerDropItemEvent) {
+        val item = e.itemDrop.itemStack.itemMeta ?: return
+        if (GetMeta.isWeapon(item)) {
+            e.isCancelled = true
+            val weapon = LoadFiles.weaponJson[GetMeta.weaponId(item)] ?: return
+            ShootEvents.waitReload(e.player, item, weapon.reload)
+            return
+        }
         ScopeEvent.quitZoom(e.player)
         return
     }

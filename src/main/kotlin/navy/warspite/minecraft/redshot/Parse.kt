@@ -16,6 +16,7 @@ object Parse {
         val sneak: Sneak? = null,
         val burstFire: BurstFire? = null,
         val reload: Reload,
+        val firearmAction: FirearmAction,
         val scope: Scope? = null
     )
 
@@ -37,9 +38,9 @@ object Parse {
         val projectileType: String = "snowball",
         val bulletSpread: Double = 0.0,
         val recoil: Boolean = true,
-        val recoilX: Double? = 0.0,
-        val recoilY: Double? = 0.0,
-        val shootSounds: ArrayList<String>?,
+        val recoilX: Double = 0.0,
+        val recoilY: Double = 0.0,
+        val shootSounds: ArrayList<String> = arrayListOf(),
     )
 
     @Serializable
@@ -62,6 +63,14 @@ object Parse {
         val reloadDuration: Int = 0,
         val outOfAmmoSounds: ArrayList<String> = arrayListOf(),
         val reloadingSounds: ArrayList<String> = arrayListOf()
+    )
+
+    @Serializable
+    data class FirearmAction(
+        val type: String = "slide",
+        val closeDuration: Int = 0,
+        val closeShootDelay: Int = 0,
+        val closeSounds: ArrayList<String> = arrayListOf()
     )
 
     @Serializable

@@ -14,14 +14,11 @@ object ScopeEvent {
         val itemMeta = player.inventory.itemInMainHand.itemMeta!!
         val weaponId = GetMeta.weaponId(itemMeta)
         val scope = LoadFiles.weaponJson[weaponId]?.scope ?: return
-        if (CatchEvent.scopingPlayer[player]!!) {
-            quitZoom(player, scope)
-        } else {
-            zoom(player, scope)
-        }
+        if (CatchEvent.scopingPlayer[player]!!) quitZoom(player, scope)
+        else zoom(player, scope)
     }
 
-    fun zoom(player: Player, scope: Parse.Scope) {
+    private fun zoom(player: Player, scope: Parse.Scope) {
         CatchEvent.scopingPlayer[player] = true
         if (scope.sight) player.inventory.helmet = ItemStack(Material.CARVED_PUMPKIN)
         PlaySound.playByList(scope.toggleZoomSounds, player)
@@ -29,7 +26,7 @@ object ScopeEvent {
         return
     }
 
-    fun quitZoom(player: Player, scope: Parse.Scope) {
+    private fun quitZoom(player: Player, scope: Parse.Scope) {
         CatchEvent.scopingPlayer[player] = false
         player.inventory.helmet = ItemStack(Material.AIR)
         PlaySound.playByList(scope.toggleZoomSounds, player)

@@ -22,8 +22,7 @@ object GenerateWeapon {
         itemMeta.persistentDataContainer.set(weaponId, PersistentDataType.STRING, key)
         itemMeta.persistentDataContainer.set(ammo, PersistentDataType.INTEGER, 0)
 
-//        itemMeta.setDisplayName(colouredText("""${itemInformation.itemName} □ «0»""")) //アイテム名
-        itemMeta.setDisplayName(colouredText(itemInformation.itemName)) //アイテム名
+        itemMeta.setDisplayName(colouredText(itemInformation.itemName))
 
         val lore = arrayListOf<String>()
         itemInformation.itemLore.forEach { lore.add(colouredText(it)) }

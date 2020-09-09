@@ -71,46 +71,12 @@ object ShootEvents {
         }
     }
 
-    fun cancelReload(int: Int) {
-        Bukkit.getScheduler().cancelTask(int)
+    fun cancelReload(player: Player) {
+        CatchEvent.reloadingPlayer[player] = false
     }
 
-    fun waitReload(player: Player, itemMeta: ItemMeta, reload: Parse.Reload) {
-        val ammo = GetMeta.ammo(itemMeta) ?: return
-        val fullyAmmo = reload.reloadAmount
-        if (ammo == fullyAmmo) return
-        if (CatchEvent.reloadingPlayer[player]!!) return
+    fun reload(player: Player, itemMeta: ItemMeta, reload: Parse.Reload) {
 
-        CatchEvent.reloadingPlayer[player] = true
-        val sounds = reload.reloadingSounds.map { it.split('-') }
-        var runCount = 0
-        object : BukkitRunnable() {
-            override fun run() {
-                if (runCount <= reload.reloadDuration) {
-                    if (!CatchEvent.scopingPlayer[player]!!) cancel()
-                    for (sound in sounds) {
-                        if (runCount == sound[3].toInt()) {
-                            PlaySound.playSound(
-                                player,
-                                Sound.valueOf(sound[0]),
-                                sound[1].toFloat(),
-                                sound[2].toFloat()
-                            )
-                        }
-                    }
-                    runCount++
-                } else {
-                    player.sendMessage("$runCount")
-                    CatchEvent.reloadingPlayer[player] = false
-                    cancel()
-                }
-            }
-        }.runTaskTimer(plugin, 0, 1)
-    }
-
-    fun reload(player: Player, itemMeta: ItemMeta, reload: Parse.Reload): ItemMeta {
-        itemMeta.setDisplayName("done")
-        return itemMeta
     }
 
     private fun projectile(weapon: Parse.Parameters, player: Player, accuracy: Double) {

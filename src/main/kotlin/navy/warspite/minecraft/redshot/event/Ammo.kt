@@ -1,28 +1,31 @@
 package navy.warspite.minecraft.redshot.event
 
-import navy.warspite.minecraft.redshot.LoadFiles
 import navy.warspite.minecraft.redshot.Main
+import navy.warspite.minecraft.redshot.Parse
 import navy.warspite.minecraft.redshot.util.GetColoured.colouredText
 import org.bukkit.NamespacedKey
 import org.bukkit.inventory.meta.ItemMeta
 import org.bukkit.persistence.PersistentDataType
 
-object SetAmmo {
+object Ammo {
     private val plugin = Main.instance
-    fun setAmmo(itemMeta: ItemMeta, amount: Int): ItemMeta {
+    fun setAmmo(itemMeta: ItemMeta, amount: Int, weapon: Parse.Parameters): ItemMeta {
         val key = NamespacedKey(plugin, "ammo")
-        val weaponId = NamespacedKey(plugin, "weaponId")
-        val container = itemMeta.persistentDataContainer
-
-        val weapon = LoadFiles.weaponJson[container.get(weaponId, PersistentDataType.STRING)]
-            ?: return itemMeta
 
         itemMeta.persistentDataContainer.set(key, PersistentDataType.INTEGER, amount)
         itemMeta.setDisplayName(
             colouredText(
-                """${weapon.itemInformation.itemName} □ «$amount≫"""
+                """${weapon.itemInformation.itemName}&r ■ ≪$amount≫"""
             )
         )
         return itemMeta
+    }
+
+    fun getAmmo(itemMeta: ItemMeta): Int? {
+        val key = NamespacedKey(plugin, "ammo")
+
+        val container = itemMeta.persistentDataContainer
+        if (!container.has(key, PersistentDataType.INTEGER)) return null
+        return container.get(key, PersistentDataType.INTEGER)
     }
 }

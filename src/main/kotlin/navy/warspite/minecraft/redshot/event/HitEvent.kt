@@ -14,7 +14,7 @@ object HitEvent : Listener {
     private val plugin = Main.instance
 
     @EventHandler
-    fun snowballHitEvent(e: ProjectileHitEvent) {
+    fun projectileHitEvent(e: ProjectileHitEvent) {
         val snowball = if (e.entity is Snowball) e.entity else return
         if (!snowball.hasMetadata("damage")) return
         if (!snowball.hasMetadata("shooter")) return

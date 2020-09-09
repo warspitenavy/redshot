@@ -20,9 +20,13 @@ object GenerateWeapon {
         val itemMeta = itemStack?.itemMeta ?: return null
 
         itemMeta.persistentDataContainer.set(weaponId, PersistentDataType.STRING, key)
-        itemMeta.persistentDataContainer.set(ammo, PersistentDataType.INTEGER, 0)
+        itemMeta.persistentDataContainer.set(ammo, PersistentDataType.INTEGER, weapon.reload.reloadAmount)
 
-        itemMeta.setDisplayName(colouredText(itemInformation.itemName))
+        itemMeta.setDisplayName(
+            colouredText(
+                """${itemInformation.itemName}&r ■ ≪${weapon.reload.reloadAmount}≫"""
+            )
+        )
 
         val lore = arrayListOf<String>()
         itemInformation.itemLore.forEach { lore.add(colouredText(it)) }

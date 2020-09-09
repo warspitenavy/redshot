@@ -15,6 +15,12 @@ object GetMeta {
         return container.has(key, PersistentDataType.STRING)
     }
 
+    fun isNotWeapon(itemMeta: ItemMeta): Boolean {
+        val key = NamespacedKey(plugin, "weaponId")
+        val container = itemMeta.persistentDataContainer
+        return !container.has(key, PersistentDataType.STRING)
+    }
+
     fun weaponId(itemMeta: ItemMeta): String? {
         val key = NamespacedKey(plugin, "weaponId")
         val container = itemMeta.persistentDataContainer

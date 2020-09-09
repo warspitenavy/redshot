@@ -24,8 +24,18 @@ object ShootEvents {
         val sneak = weapon.sneak
         val scope = weapon.scope
         val burstFire = weapon.burstFire
+        val reload = weapon.reload
 
         fun shoot() {
+            val ammo = Ammo.getAmmo(itemMeta) ?: return
+            if (ammo - 1 < 0) {
+                PlaySound.playByList(reload.outOfAmmoSounds, player)
+                Reload.reloading(player, itemMeta, weapon)
+                return
+            } else {
+                val itemStack = player.inventory.itemInMainHand
+                itemStack.itemMeta = Ammo.setAmmo(itemMeta, ammo - 1, weapon)
+            }
             val accuracy =
                 when {
                     CatchEvent.scopingPlayer[player]!! -> scope?.bulletSpread ?: 0.0
@@ -39,13 +49,14 @@ object ShootEvents {
                     accuracy
                 )
             }
-            if (shooting.shootSounds != null) PlaySound.playByList(shooting.shootSounds, player)
+            if (shooting.shootSounds.isNotEmpty()) PlaySound.playByList(shooting.shootSounds, player)
         }
 
         fun burstShoot() {
             var runCount = 0
             object : BukkitRunnable() {
                 override fun run() {
+                    if (CatchEvent.reloadingPlayer[player]!!) cancel()
                     if (runCount < burstFire!!.shotsPerBurst) {
                         shoot()
                         runCount++
@@ -69,14 +80,6 @@ object ShootEvents {
                 CatchEvent.shootingPlayer[player] = false
             }, shooting.delayBetweenShots.toLong())
         }
-    }
-
-    fun cancelReload(player: Player) {
-        CatchEvent.reloadingPlayer[player] = false
-    }
-
-    fun reload(player: Player, itemMeta: ItemMeta, reload: Parse.Reload) {
-
     }
 
     private fun projectile(weapon: Parse.Parameters, player: Player, accuracy: Double) {
@@ -105,7 +108,7 @@ object ShootEvents {
             Vector(
                 Math.random() * accuracy,
                 Math.random() * accuracy,
-                0.0
+                Math.random() * accuracy
             )
         )
         projectile.velocity = velocity

@@ -23,6 +23,7 @@ object PlaySound {
             )
         }
     }
+
     fun playSound(player: Player, sound: Sound, volume: Float, pitch: Float) {
         player.location.world?.playSound(
             player.location,

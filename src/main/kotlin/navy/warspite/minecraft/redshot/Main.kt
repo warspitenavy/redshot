@@ -4,6 +4,7 @@ import navy.warspite.minecraft.redshot.commands.CommandRegister
 import navy.warspite.minecraft.redshot.commands.TabComplete
 import navy.warspite.minecraft.redshot.event.CatchEvent
 import navy.warspite.minecraft.redshot.event.HitEvent
+import navy.warspite.minecraft.redshot.event.InitialiseMap
 import org.bukkit.plugin.Plugin
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -17,6 +18,7 @@ class Main : JavaPlugin() {
         instance = this
         saveDefaultConfig()
         LoadFiles.load()
+        InitialiseMap.initialise()
         getCommand("redshot")?.setExecutor(CommandRegister)
         getCommand("redshot")?.tabCompleter = TabComplete
         server.pluginManager.registerEvents(CatchEvent, this)

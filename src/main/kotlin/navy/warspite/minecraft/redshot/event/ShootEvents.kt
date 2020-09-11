@@ -28,6 +28,7 @@ object ShootEvents {
 
         fun shoot() {
             val ammo = Ammo.getAmmo(itemMeta) ?: return
+            if (CatchEvent.reloadingPlayer[player]!!) return
             if (ammo - 1 < 0) {
                 PlaySound.playByList(reload.outOfAmmoSounds, player)
                 Reload.reloading(player, itemMeta, weapon)

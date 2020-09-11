@@ -1,5 +1,6 @@
 package navy.warspite.minecraft.redshot
 
+import navy.warspite.minecraft.redshot.event.Ammo
 import navy.warspite.minecraft.redshot.util.GetColoured.colouredText
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
@@ -21,12 +22,7 @@ object GenerateWeapon {
 
         itemMeta.persistentDataContainer.set(weaponId, PersistentDataType.STRING, key)
         itemMeta.persistentDataContainer.set(ammo, PersistentDataType.INTEGER, weapon.reload.reloadAmount)
-
-        itemMeta.setDisplayName(
-            colouredText(
-                """${itemInformation.itemName}&r ■ ≪${weapon.reload.reloadAmount}≫"""
-            )
-        )
+        itemMeta.setDisplayName(Ammo.getItemName(itemInformation.itemName, weapon.reload.reloadAmount))
 
         val lore = arrayListOf<String>()
         itemInformation.itemLore.forEach { lore.add(colouredText(it)) }

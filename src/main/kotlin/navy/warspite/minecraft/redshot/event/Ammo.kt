@@ -11,14 +11,13 @@ object Ammo {
     private val plugin = Main.instance
     fun setAmmo(itemMeta: ItemMeta, amount: Int, weapon: Parse.Parameters): ItemMeta {
         val key = NamespacedKey(plugin, "ammo")
-
         itemMeta.persistentDataContainer.set(key, PersistentDataType.INTEGER, amount)
-        itemMeta.setDisplayName(
-            colouredText(
-                """${weapon.itemInformation.itemName}&r ■ ≪$amount≫"""
-            )
-        )
+        itemMeta.setDisplayName(getItemName(weapon.itemInformation.itemName, amount))
         return itemMeta
+    }
+
+    fun getItemName(itemName: String, amount: Int): String {
+        return colouredText("""${itemName}&r «${amount}»""")
     }
 
     fun getAmmo(itemMeta: ItemMeta): Int? {

@@ -107,9 +107,12 @@ object ShootEvents {
         velocity.multiply(weapon.shooting.projectileSpeed / 10.0)
         velocity.add(
             Vector(
-                Math.random() * accuracy,
-                Math.random() * accuracy,
-                Math.random() * accuracy
+                ((Math.random() * 1) - 0.5) * accuracy,
+                ((Math.random() * 1) - 0.5) * accuracy,
+                ((Math.random() * 1) - 0.5) * accuracy
+//                Math.random() * accuracy,
+//                Math.random() * accuracy,
+//                Math.random() * accuracy
             )
         )
         projectile.velocity = velocity

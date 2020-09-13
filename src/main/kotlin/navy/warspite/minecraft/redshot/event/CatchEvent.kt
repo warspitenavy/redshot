@@ -64,6 +64,12 @@ object CatchEvent : Listener {
     }
 
     @EventHandler
+    private fun playerEggThrowEvent(e: PlayerEggThrowEvent) {
+        if (!e.egg.hasMetadata("shooter")) return
+        e.isHatching = false
+    }
+
+    @EventHandler
     private fun playerSwapHandItemEvent(e: PlayerSwapHandItemsEvent) {
         ScopeEvent.quitZoom(e.player)
         Reload.cancel(e.player)

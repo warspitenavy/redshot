@@ -22,7 +22,7 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib"
 //    compile "com.charleskorn.kaml:kaml:0.21.0"
     compile "org.jetbrains.kotlinx:kotlinx-serialization-core:1.0.0-RC"
-    implementation "org.spigotmc:spigot-api:1.16.2-R0.1-SNAPSHOT"
+    implementation "org.spigotmc:spigot-api:1.16.3-R0.1-SNAPSHOT"
 }
 
 jar {

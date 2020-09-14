@@ -12,7 +12,7 @@ object Ammo {
     fun setAmmo(itemMeta: ItemMeta, amount: Int, weapon: Parse.Parameters): ItemMeta {
         val key = NamespacedKey(plugin, "ammo")
         itemMeta.persistentDataContainer.set(key, PersistentDataType.INTEGER, amount)
-        itemMeta.setDisplayName(getItemName(weapon.itemInformation.itemName, amount))
+        itemMeta.setDisplayName(getItemName(weapon.details.name, amount))
         return itemMeta
     }
 

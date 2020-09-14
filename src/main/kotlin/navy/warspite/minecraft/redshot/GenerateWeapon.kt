@@ -11,21 +11,21 @@ object GenerateWeapon {
     private val plugin = Main.instance
     fun itemStack(key: String): ItemStack? {
         val weapon = LoadFiles.weaponJson[key] ?: return null
-        val itemInformation = weapon.itemInformation
+        val itemInformation = weapon.details
 
         val weaponId = NamespacedKey(plugin, "weaponId")
         val ammo = NamespacedKey(plugin, "ammo")
 
-        val itemStack = Material.getMaterial(itemInformation.itemType)?.let { ItemStack(it) }
+        val itemStack = Material.getMaterial(itemInformation.type)?.let { ItemStack(it) }
 
         val itemMeta = itemStack?.itemMeta ?: return null
 
         itemMeta.persistentDataContainer.set(weaponId, PersistentDataType.STRING, key)
         itemMeta.persistentDataContainer.set(ammo, PersistentDataType.INTEGER, weapon.reload.reloadAmount)
-        itemMeta.setDisplayName(Ammo.getItemName(itemInformation.itemName, weapon.reload.reloadAmount))
+        itemMeta.setDisplayName(Ammo.getItemName(itemInformation.name, weapon.reload.reloadAmount))
 
         val lore = arrayListOf<String>()
-        itemInformation.itemLore.forEach { lore.add(colouredText(it)) }
+        itemInformation.lore.forEach { lore.add(colouredText(it)) }
         itemMeta.lore = lore
 
         itemStack.itemMeta = itemMeta
@@ -35,6 +35,6 @@ object GenerateWeapon {
 
     fun sounds(key: String): ArrayList<String>? {
         val weapon = LoadFiles.weaponJson[key] ?: return null
-        return weapon.itemInformation.soundsAcquired
+        return weapon.details.acquiredSounds
     }
 }

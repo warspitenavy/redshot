@@ -11,7 +11,7 @@ object Parse {
 
     @Serializable
     data class Parameters(
-        val itemInformation: ItemInformation,
+        val details: Details,
         val shooting: Shooting,
         val sneak: Sneak? = null,
         val burstFire: BurstFire? = null,
@@ -21,12 +21,12 @@ object Parse {
     )
 
     @Serializable
-    data class ItemInformation(
-        val itemName: String,
-        val itemType: String,
-        val itemLore: ArrayList<String> = arrayListOf(),
+    data class Details(
+        val name: String,
+        val type: String,
+        val lore: ArrayList<String> = arrayListOf(),
         val inventoryControl: ArrayList<String> = arrayListOf(),
-        val soundsAcquired: ArrayList<String> = arrayListOf()
+        val acquiredSounds: ArrayList<String> = arrayListOf()
     )
 
     @Serializable

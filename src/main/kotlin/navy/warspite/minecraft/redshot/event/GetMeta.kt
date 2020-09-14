@@ -4,10 +4,18 @@ import navy.warspite.minecraft.redshot.Main
 import org.bukkit.NamespacedKey
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.ItemMeta
+import org.bukkit.metadata.MetadataValue
 import org.bukkit.persistence.PersistentDataType
 
 object GetMeta {
     private val plugin = Main.instance
+
+    fun meta(string: String, list: List<MetadataValue>): MetadataValue? {
+        for (value in list) {
+            if (value.owningPlugin?.name == plugin.name) return value
+        }
+        return null
+    }
 
     fun isWeapon(itemMeta: ItemMeta): Boolean {
         val key = NamespacedKey(plugin, "weaponId")

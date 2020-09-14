@@ -16,22 +16,14 @@ object HitEvent : Listener {
         val projectile = e.entity
         if (!projectile.hasMetadata("damage")) return
         if (!projectile.hasMetadata("shooter")) return
-        val getMetadata = fun(string: String): MetadataValue? {
-            for (value in projectile.getMetadata(string)) {
-                if (value.owningPlugin?.name == Main.instance.name) return value
-            }
-            return null
-        }
-
-        val damage =
-            if (getMetadata("damage") != null) getMetadata("damage")?.value() as Int
-            else return
-        val shooter =
-            if (getMetadata("shooter") != null) getMetadata("shooter")?.value() as Player
-            else return
-        val victim =
-            if (e.hitEntity is LivingEntity) e.hitEntity as LivingEntity
-            else return
+        val damage = if (GetMeta.meta("damage", projectile.getMetadata("damage")) != null) {
+            GetMeta.meta("damage", projectile.getMetadata("damage"))?.value() as Int
+        } else return
+        val shooter = if (GetMeta.meta("shooter", projectile.getMetadata("shooter")) != null) {
+            GetMeta.meta("shooter", projectile.getMetadata("shooter"))?.value() as Player
+        } else return
+        val victim = if (e.hitEntity is LivingEntity) e.hitEntity as LivingEntity
+        else return
 
         victim.noDamageTicks = 0
         victim.damage(damage.toDouble(), shooter)

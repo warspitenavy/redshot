@@ -10,7 +10,7 @@ import org.bukkit.persistence.PersistentDataType
 object GetMeta {
     private val plugin = Main.instance
 
-    fun meta(string: String, list: List<MetadataValue>): MetadataValue? {
+    fun meta(list: List<MetadataValue>): MetadataValue? {
         for (value in list) {
             if (value.owningPlugin?.name == plugin.name) return value
         }

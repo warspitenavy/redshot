@@ -1,7 +1,7 @@
 package navy.warspite.minecraft.redshot.event
 
-import navy.warspite.minecraft.redshot.LoadFiles
-import navy.warspite.minecraft.redshot.Parse
+import navy.warspite.minecraft.redshot.LoadWeapons
+import navy.warspite.minecraft.redshot.WeaponParam
 import navy.warspite.minecraft.redshot.util.PlaySound
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -13,12 +13,12 @@ object ScopeEvent {
     fun toggleZoom(player: Player) {
         val itemMeta = player.inventory.itemInMainHand.itemMeta!!
         val weaponId = GetMeta.weaponId(itemMeta)
-        val scope = LoadFiles.weaponJson[weaponId]?.scope ?: return
+        val scope = LoadWeapons.weaponJson[weaponId]?.scope ?: return
         if (CatchEvent.scopingPlayer[player]!!) quitZoom(player, scope)
         else zoom(player, scope)
     }
 
-    private fun zoom(player: Player, scope: Parse.Scope) {
+    private fun zoom(player: Player, scope: WeaponParam.Scope) {
         CatchEvent.scopingPlayer[player] = true
         if (scope.sight) player.inventory.helmet = ItemStack(Material.CARVED_PUMPKIN)
         PlaySound.playByList(scope.toggleZoomSounds, player)
@@ -26,7 +26,7 @@ object ScopeEvent {
         return
     }
 
-    private fun quitZoom(player: Player, scope: Parse.Scope) {
+    private fun quitZoom(player: Player, scope: WeaponParam.Scope) {
         CatchEvent.scopingPlayer[player] = false
         player.inventory.helmet = ItemStack(Material.AIR)
         PlaySound.playByList(scope.toggleZoomSounds, player)

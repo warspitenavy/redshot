@@ -1,7 +1,7 @@
 package navy.warspite.minecraft.redshot.event
 
 import navy.warspite.minecraft.redshot.Main
-import navy.warspite.minecraft.redshot.Parse
+import navy.warspite.minecraft.redshot.WeaponParam
 import navy.warspite.minecraft.redshot.util.PlaySound
 import org.bukkit.Sound
 import org.bukkit.entity.Player
@@ -13,7 +13,7 @@ object Reload {
         CatchEvent.reloadingPlayer[player] = false
     }
 
-    fun reloading(player: Player, itemMeta: ItemMeta, weapon: Parse.Parameters) {
+    fun reloading(player: Player, itemMeta: ItemMeta, weapon: WeaponParam.Parameters) {
         ScopeEvent.quitZoom(player)
 
         val reload = weapon.reload
@@ -47,7 +47,7 @@ object Reload {
             }
         }.runTaskTimer(Main.instance, 0, 1)
     }
-    fun reload(player: Player, itemMeta: ItemMeta, weapon: Parse.Parameters) {
+    fun reload(player: Player, itemMeta: ItemMeta, weapon: WeaponParam.Parameters) {
         val itemStack = player.inventory.itemInMainHand
         itemStack.itemMeta = Ammo.setAmmo(itemMeta, weapon.reload.reloadAmount, weapon)
     }

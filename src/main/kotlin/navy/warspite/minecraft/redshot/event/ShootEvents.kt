@@ -1,13 +1,11 @@
 package navy.warspite.minecraft.redshot.event
 
-import navy.warspite.minecraft.redshot.LoadFiles
+import navy.warspite.minecraft.redshot.LoadWeapons
 import navy.warspite.minecraft.redshot.Main
-import navy.warspite.minecraft.redshot.Parse
+import navy.warspite.minecraft.redshot.WeaponParam
 import navy.warspite.minecraft.redshot.util.PlaySound
 import org.bukkit.Bukkit
-import org.bukkit.Sound
 import org.bukkit.entity.*
-import org.bukkit.inventory.meta.ItemMeta
 import org.bukkit.metadata.FixedMetadataValue
 import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.util.Vector
@@ -19,7 +17,7 @@ object ShootEvents {
 
         val itemMeta = player.inventory.itemInMainHand.itemMeta ?: return
         val weaponId = GetMeta.weaponId(itemMeta) ?: return
-        val weapon = LoadFiles.weaponJson[weaponId] ?: return
+        val weapon = LoadWeapons.weaponJson[weaponId] ?: return
         val shooting = weapon.shooting
         val sneak = weapon.sneak
         val scope = weapon.scope
@@ -83,7 +81,7 @@ object ShootEvents {
         }
     }
 
-    private fun projectile(weapon: Parse.Parameters, player: Player, accuracy: Double) {
+    private fun projectile(weapon: WeaponParam.Parameters, player: Player, accuracy: Double) {
         val projectile = when (weapon.shooting.projectileType) {
             "snowball" -> player.launchProjectile(Snowball::class.java)
             "arrow" -> player.launchProjectile(Arrow::class.java)
@@ -101,6 +99,12 @@ object ShootEvents {
             "shooter", FixedMetadataValue(
                 plugin,
                 player
+            )
+        )
+        projectile.setMetadata(
+            "weapon", FixedMetadataValue(
+                plugin,
+                weapon.details.name
             )
         )
         val velocity = player.location.direction

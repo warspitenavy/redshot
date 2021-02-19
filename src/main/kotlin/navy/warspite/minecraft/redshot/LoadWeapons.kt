@@ -6,8 +6,9 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
-object LoadFiles {
-    val weaponJson = linkedMapOf<String, Parse.Parameters>()
+object LoadWeapons {
+    val plugin = Main.instance
+    val weaponJson = linkedMapOf<String, WeaponParam.Parameters>()
 
     fun load() {
         val jsons = loadJsonObjects()
@@ -17,11 +18,11 @@ object LoadFiles {
         Main.instance.logger.info("Loaded Weapons (Json): ${jsons.keys}")
     }
 
-    private fun loadJsonObjects(): LinkedHashMap<String, Parse.Parameters> {
-        val jsons = linkedMapOf<String, Parse.Parameters>()
+    private fun loadJsonObjects(): LinkedHashMap<String, WeaponParam.Parameters> {
+        val jsons = linkedMapOf<String, WeaponParam.Parameters>()
         for (f in loadJsonFiles()) {
             val file = f.toFile().readText()
-            val data = Json.decodeFromString<List<Parse.Weapon>>(file)
+            val data = Json.decodeFromString<List<WeaponParam.Weapon>>(file)
             for (d in data) {
                 jsons[d.id] = d.parameters
             }
@@ -30,7 +31,7 @@ object LoadFiles {
     }
 
     private fun loadJsonFiles(): ArrayList<Path> {
-        val dir = Paths.get("./plugins/RedShot/Weapons")
+        val dir = Paths.get("./plugins/${plugin.name}/Weapons")
         val fileExtension = ".json"
         if (!Files.isDirectory(dir)) Files.createDirectory(dir)
         if (Files.notExists(dir)) Files.createDirectory(dir)

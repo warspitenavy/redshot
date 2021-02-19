@@ -2,7 +2,7 @@ package navy.warspite.minecraft.redshot
 
 import kotlinx.serialization.Serializable
 
-object Parse {
+object WeaponParam {
     @Serializable
     data class Weapon(
         val id: String,

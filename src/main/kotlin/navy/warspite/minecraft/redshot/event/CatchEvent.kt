@@ -1,11 +1,14 @@
 package navy.warspite.minecraft.redshot.event
 
-import navy.warspite.minecraft.redshot.LoadFiles
+import navy.warspite.minecraft.redshot.LoadWeapons
+import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.Action
 import org.bukkit.event.block.BlockBreakEvent
+import org.bukkit.event.entity.EntityDamageEvent
+import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.player.*
 
@@ -48,7 +51,7 @@ object CatchEvent : Listener {
     private fun playerDropItemEvent(e: PlayerDropItemEvent) {
         ScopeEvent.quitZoom(e.player)
         val item = e.itemDrop.itemStack.itemMeta ?: return
-        val weapon = LoadFiles.weaponJson[GetMeta.weaponId(item)] ?: return
+        val weapon = LoadWeapons.weaponJson[GetMeta.weaponId(item)] ?: return
 
         if (!GetMeta.isWeapon(item)) return
 
@@ -89,5 +92,10 @@ object CatchEvent : Listener {
         val itemMeta = e.player.inventory.itemInMainHand.itemMeta ?: return
         if (GetMeta.isNotWeapon(itemMeta)) return
         e.isCancelled = true
+    }
+
+    @EventHandler
+    private fun playerDeathEvent(e: PlayerDeathEvent) {
+//        e.deathMessage = null
     }
 }

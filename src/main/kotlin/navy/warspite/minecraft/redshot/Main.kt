@@ -5,6 +5,7 @@ import navy.warspite.minecraft.redshot.commands.TabComplete
 import navy.warspite.minecraft.redshot.event.CatchEvent
 import navy.warspite.minecraft.redshot.event.HitEvent
 import navy.warspite.minecraft.redshot.event.InitialiseMap
+import navy.warspite.minecraft.redshot.util.ConfigFile
 import org.bukkit.plugin.Plugin
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -16,8 +17,8 @@ class Main : JavaPlugin() {
 
     override fun onEnable() {
         instance = this
-        saveDefaultConfig()
-        LoadFiles.load()
+        ConfigFile.load()
+        LoadWeapons.load()
         InitialiseMap.initialise()
         getCommand("redshot")?.setExecutor(CommandRegister)
         getCommand("redshot")?.tabCompleter = TabComplete

@@ -1,19 +1,24 @@
 package navy.warspite.minecraft.redshot.event
 
 import navy.warspite.minecraft.redshot.Main
-import org.bukkit.entity.Entity
+import navy.warspite.minecraft.redshot.util.GetColoured.colourCode
+import navy.warspite.minecraft.redshot.util.GetColoured.coloured
+import net.milkbowl.vault.chat.Chat
+import net.milkbowl.vault.permission.Permission
+import org.bukkit.ChatColor
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
-import org.bukkit.entity.Snowball
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.ProjectileHitEvent
-import org.bukkit.metadata.MetadataValue
 
 object HitEvent : Listener {
+    val plugin = Main.instance
+
     @EventHandler
     private fun projectileHitEvent(e: ProjectileHitEvent) {
-        val projectile = e.entity
+        val projectile = e.entity //雪玉とか
         if (!projectile.hasMetadata("damage")) return
         if (!projectile.hasMetadata("shooter")) return
         val damage = if (GetMeta.meta(projectile.getMetadata("damage")) != null) {
@@ -22,11 +27,21 @@ object HitEvent : Listener {
         val shooter = if (GetMeta.meta(projectile.getMetadata("shooter")) != null) {
             GetMeta.meta(projectile.getMetadata("shooter"))?.value() as Player
         } else return
+        val weaponName = if (GetMeta.meta(projectile.getMetadata("weapon")) != null) {
+            GetMeta.meta(projectile.getMetadata("weapon"))?.value() as String
+        } else null
         val victim = if (e.hitEntity is LivingEntity) e.hitEntity as LivingEntity
         else return
 
         victim.noDamageTicks = 0
         victim.damage(damage.toDouble(), shooter)
+//        if (victim.isDead)
+//            plugin.server.broadcastMessage(
+//                coloured(
+//                    "${shooter.name}&r --<${weaponName}&r>--> ${(victim as Player).name}"
+//                )
+//            )
+//        }
     }
 
 //    @EventHandler

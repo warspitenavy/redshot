@@ -10,7 +10,7 @@ import org.bukkit.persistence.PersistentDataType
 object GenerateWeapon {
     private val plugin = Main.instance
     fun itemStack(key: String): ItemStack? {
-        val weapon = LoadFiles.weaponJson[key] ?: return null
+        val weapon = LoadWeapons.weaponJson[key] ?: return null
         val itemInformation = weapon.details
 
         val weaponId = NamespacedKey(plugin, "weaponId")
@@ -34,7 +34,7 @@ object GenerateWeapon {
     }
 
     fun sounds(key: String): ArrayList<String>? {
-        val weapon = LoadFiles.weaponJson[key] ?: return null
+        val weapon = LoadWeapons.weaponJson[key] ?: return null
         return weapon.details.acquiredSounds
     }
 }

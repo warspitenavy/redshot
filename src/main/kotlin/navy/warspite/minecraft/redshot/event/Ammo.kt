@@ -1,7 +1,7 @@
 package navy.warspite.minecraft.redshot.event
 
 import navy.warspite.minecraft.redshot.Main
-import navy.warspite.minecraft.redshot.Parse
+import navy.warspite.minecraft.redshot.WeaponParam
 import navy.warspite.minecraft.redshot.util.GetColoured.colouredText
 import org.bukkit.NamespacedKey
 import org.bukkit.inventory.meta.ItemMeta
@@ -9,7 +9,7 @@ import org.bukkit.persistence.PersistentDataType
 
 object Ammo {
     private val plugin = Main.instance
-    fun setAmmo(itemMeta: ItemMeta, amount: Int, weapon: Parse.Parameters): ItemMeta {
+    fun setAmmo(itemMeta: ItemMeta, amount: Int, weapon: WeaponParam.Parameters): ItemMeta {
         val key = NamespacedKey(plugin, "ammo")
         itemMeta.persistentDataContainer.set(key, PersistentDataType.INTEGER, amount)
         itemMeta.setDisplayName(getItemName(weapon.details.name, amount))

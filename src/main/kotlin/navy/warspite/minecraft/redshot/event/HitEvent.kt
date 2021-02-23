@@ -3,9 +3,10 @@ package navy.warspite.minecraft.redshot.event
 import navy.warspite.minecraft.redshot.Main
 import navy.warspite.minecraft.redshot.util.GetColoured.colourCode
 import navy.warspite.minecraft.redshot.util.GetColoured.coloured
-import net.milkbowl.vault.chat.Chat
-import net.milkbowl.vault.permission.Permission
+import net.md_5.bungee.api.chat.BaseComponent
+import net.md_5.bungee.api.chat.TextComponent
 import org.bukkit.ChatColor
+import org.bukkit.entity.HumanEntity
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -35,7 +36,9 @@ object HitEvent : Listener {
 
         victim.noDamageTicks = 0
         victim.damage(damage.toDouble(), shooter)
-//        if (victim.isDead)
+//        if (victim !is Player) return
+//        if (victim.isDead) {
+//            plugin.server.spigot().broadcast()
 //            plugin.server.broadcastMessage(
 //                coloured(
 //                    "${shooter.name}&r --<${weaponName}&r>--> ${(victim as Player).name}"

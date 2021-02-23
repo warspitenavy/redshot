@@ -1,10 +1,8 @@
-package navy.warspite.minecraft.redshot.util
+package navy.warspite.minecraft.redshot
 
 import com.charleskorn.kaml.Yaml
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
-import navy.warspite.minecraft.redshot.ConfigParam
-import navy.warspite.minecraft.redshot.Main
 import navy.warspite.minecraft.redshot.util.GetColoured.coloured
 import java.nio.file.Files
 import java.nio.file.Paths

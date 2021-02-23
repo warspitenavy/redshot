@@ -94,8 +94,8 @@ object CatchEvent : Listener {
         e.isCancelled = true
     }
 
-    @EventHandler
-    private fun playerDeathEvent(e: PlayerDeathEvent) {
+//    @EventHandler
+//    private fun playerDeathEvent(e: PlayerDeathEvent) {
 //        e.deathMessage = null
-    }
+//    }
 }

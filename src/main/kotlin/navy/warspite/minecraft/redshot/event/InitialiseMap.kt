@@ -1,6 +1,5 @@
 package navy.warspite.minecraft.redshot.event
 
-import navy.warspite.minecraft.redshot.Main
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 

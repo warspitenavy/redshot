@@ -22,7 +22,6 @@ object Ammo {
 
     fun getAmmo(itemMeta: ItemMeta): Int? {
         val key = NamespacedKey(plugin, "ammo")
-
         val container = itemMeta.persistentDataContainer
         if (!container.has(key, PersistentDataType.INTEGER)) return null
         return container.get(key, PersistentDataType.INTEGER)

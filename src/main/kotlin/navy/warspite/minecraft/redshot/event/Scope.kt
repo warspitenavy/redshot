@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 
-object ScopeEvent {
+object Scope {
     fun toggleZoom(player: Player) {
         val itemMeta = player.inventory.itemInMainHand.itemMeta!!
         val weaponId = GetMeta.weaponId(itemMeta)

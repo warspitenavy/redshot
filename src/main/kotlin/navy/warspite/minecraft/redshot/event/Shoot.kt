@@ -10,7 +10,7 @@ import org.bukkit.metadata.FixedMetadataValue
 import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.util.Vector
 
-object ShootEvents {
+object Shoot {
     private val plugin = Main.instance
     fun shooting(player: Player) {
         if (CatchEvent.shootingPlayer[player]!!) return
@@ -43,6 +43,7 @@ object ShootEvents {
                 }
             for (i in 1..shooting.projectileAmount) {
                 projectile(
+                    weaponId,
                     weapon,
                     player,
                     accuracy
@@ -69,19 +70,25 @@ object ShootEvents {
         if (burstFire != null) {
             burstShoot()
             CatchEvent.shootingPlayer[player] = true
-            Bukkit.getScheduler().runTaskLater(plugin, Runnable {
+            plugin.server.scheduler.runTaskLater(plugin, Runnable {
                 CatchEvent.shootingPlayer[player] = false
             }, shooting.delayBetweenShots.toLong())
+//            Bukkit.getScheduler().runTaskLater(plugin, Runnable {
+//                CatchEvent.shootingPlayer[player] = false
+//            }, shooting.delayBetweenShots.toLong())
         } else {
             shoot()
             CatchEvent.shootingPlayer[player] = true
-            Bukkit.getScheduler().runTaskLater(plugin, Runnable {
+            plugin.server.scheduler.runTaskLater(plugin, Runnable {
                 CatchEvent.shootingPlayer[player] = false
             }, shooting.delayBetweenShots.toLong())
+//            Bukkit.getScheduler().runTaskLater(plugin, Runnable {
+//                CatchEvent.shootingPlayer[player] = false
+//            }, shooting.delayBetweenShots.toLong())
         }
     }
 
-    private fun projectile(weapon: WeaponParam.Parameters, player: Player, accuracy: Double) {
+    private fun projectile(weaponId: String,weapon: WeaponParam.Parameters, player: Player, accuracy: Double) {
         val projectile = when (weapon.shooting.projectileType) {
             "snowball" -> player.launchProjectile(Snowball::class.java)
             "arrow" -> player.launchProjectile(Arrow::class.java)
@@ -104,7 +111,7 @@ object ShootEvents {
         projectile.setMetadata(
             "weapon", FixedMetadataValue(
                 plugin,
-                weapon.details.name
+                weaponId
             )
         )
         val velocity = player.location.direction

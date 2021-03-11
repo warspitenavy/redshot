@@ -11,15 +11,13 @@ object ConfigParam {
     @Serializable
     data class KillScore(
         val enable: Boolean = false,
-        val mySql: MySql = MySql()
+        val server: Server = Server()
     )
 
     @Serializable
-    data class MySql(
+    data class Server(
         val host: String = "127.0.0.1",
-        val port: String = "3306",
-        val database: String = "redshot",
-        val user: String = "root",
-        val password: String = "password"
+        val port: String = "3080",
+        val post: String = "/post/"
     )
 }

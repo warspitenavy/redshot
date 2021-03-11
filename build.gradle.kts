@@ -10,7 +10,6 @@ group = "navy.warspite.minecraft.redshot"
 version = "1.0-SNAPSHOT"
 
 repositories {
-    jcenter()
     mavenCentral()
     maven {
         url = uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots")
@@ -28,6 +27,8 @@ dependencies {
     api("org.jetbrains.kotlin:kotlin-stdlib")
     api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0")
     api("com.charleskorn.kaml:kaml:0.27.0")
+    api("com.github.kittinunf.fuel:fuel:2.3.1")
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
 //    implementation("us.mcdevs.library.kotlin:Kotlin:1.4.21")
     implementation("org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT")
 }

@@ -14,7 +14,7 @@ object Reload {
     }
 
     fun reloading(player: Player, itemMeta: ItemMeta, weapon: WeaponParam.Parameters) {
-        ScopeEvent.quitZoom(player)
+        Scope.quitZoom(player)
 
         val reload = weapon.reload
         val ammo = GetMeta.ammo(itemMeta) ?: return

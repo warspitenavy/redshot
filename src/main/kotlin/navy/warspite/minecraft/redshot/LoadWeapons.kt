@@ -7,7 +7,7 @@ import java.nio.file.Path
 import java.nio.file.Paths
 
 object LoadWeapons {
-    val plugin = Main.instance
+    private val plugin = Main.instance
     val weaponJson = linkedMapOf<String, WeaponParam.Parameters>()
 
     fun load() {

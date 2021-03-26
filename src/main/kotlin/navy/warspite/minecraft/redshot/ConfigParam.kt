@@ -18,6 +18,6 @@ object ConfigParam {
     data class Server(
         val host: String = "127.0.0.1",
         val port: String = "3080",
-        val post: String = "/post/"
+        val post: String = "/post"
     )
 }

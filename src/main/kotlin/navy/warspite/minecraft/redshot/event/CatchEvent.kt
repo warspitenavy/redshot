@@ -118,7 +118,14 @@ object CatchEvent : Listener {
         if (victim !is Player) return
         if (!ConfigFile.config.killScore.enable) return
         if (victim.isDead) {
-            PostScore.post("${victim.uniqueId}", "${shooter.uniqueId}", weapon, Date().time)
+            PostScore.post(
+                "${victim.uniqueId}",
+                "${victim.displayName}",
+                "${shooter.uniqueId}",
+                "${shooter.displayName}",
+                weapon,
+                Date().time
+            )
         }
     }
 }

@@ -19,7 +19,7 @@ object GetColoured {
         return when (colour) {
             ChatColor.BLACK -> "&0"
             ChatColor.DARK_BLUE -> "&1"
-            ChatColor.DARK_GRAY -> "&2"
+            ChatColor.DARK_GREEN -> "&2"
             ChatColor.DARK_AQUA -> "&3"
             ChatColor.DARK_RED -> "&4"
             ChatColor.DARK_PURPLE -> "&5"

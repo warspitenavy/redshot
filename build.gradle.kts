@@ -1,53 +1,94 @@
 import net.minecrell.pluginyml.bukkit.BukkitPluginDescription
+import dev.s7a.gradle.minecraft.server.tasks.LaunchMinecraftServerTask
+import dev.s7a.gradle.minecraft.server.tasks.LaunchMinecraftServerTask.JarUrl
 
 plugins {
-    kotlin("jvm") version "1.6.20"
-    kotlin("plugin.serialization") version "1.6.10"
-    id("net.minecrell.plugin-yml.bukkit") version "0.3.0"
+    kotlin("jvm") version "1.7.10"
+    kotlin("plugin.serialization") version "1.7.10"
+    id("net.minecrell.plugin-yml.bukkit") version "0.5.2"
+    id("dev.s7a.gradle.minecraft.server") version "1.2.0"
 }
 
-group = "navy.warspite.minecraft.redshot"
-version = "1.0-SNAPSHOT"
+val mcVersion: String by project
+
+group = "navy.warspite"
+version = "2.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
-    maven {
-        url = uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots")
-    }
-    maven {
-        url = uri("https://oss.sonatype.org/content/repositories/snapshots")
-    }
-    maven {
-        url = uri("https://nexus.mcdevs.us/repository/mcdevs/")
-    }
+    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
+//    maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
 }
 
 dependencies {
-    api(kotlin("stdlib-jdk8"))
-    api("org.jetbrains.kotlin:kotlin-stdlib")
-    api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
-    api("com.charleskorn.kaml:kaml:0.43.0")
-    api("com.github.kittinunf.fuel:fuel:2.3.1")
-    api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
-//    implementation("us.mcdevs.library.kotlin:Kotlin:1.4.21")
-    implementation("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
+    implementation(kotlin("stdlib"))
+//    library(kotlin("stdlib")) // All platforms
+
+    implementation("org.spigotmc:spigot-api:${mcVersion}-R0.1-SNAPSHOT")
+
+    api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
+
+    api("com.charleskorn.kaml:kaml:0.45.0")
+//    api("com.akuleshov7:ktoml-core:0.2.11")
+//    api("com.akuleshov7:ktoml-file:0.2.11")
+
+//    api("dev.s7a:ktSpigot-v1_18:1.0.0-SNAPSHOT")
+}
+
+//task("buildJar", Jar::class) {
+val jar by tasks.getting(Jar::class) {
+    configurations.api.get().isCanBeResolved = true
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from(configurations.api.get().map {
+        if (it.isDirectory) it else zipTree(it)
+    })
+}
+
+task<LaunchMinecraftServerTask>("buildAndLaunchServer") {
+    dependsOn("jar")
+    doFirst {
+        copy {
+            from(buildDir.resolve("libs/redshot-2.0-SNAPSHOT.jar"))
+            into(buildDir.resolve("MinecraftPaperServer/plugins"))
+        }
+    }
+
+    jarUrl.set(JarUrl.Paper("1.19"))
+    jarName.set("server.jar")
+    serverDirectory.set(buildDir.resolve("MinecraftPaperServer"))
+    nogui.set(true)
+    agreeEula.set(false)
+}
+
+minecraftServerConfig {
+    jarUrl.set(JarUrl.Paper("1.19"))
 }
 
 bukkit {
-//    depend = listOf("Kotlin")
     name = "RedShot"
-    main = "navy.warspite.minecraft.redshot.Main"
-    version = "1.0"
-    apiVersion = "1.16"
+    version = "2.0"
+    description = "redshot plugin."
+    // website = "https://example.com"
     author = "warspitenavy"
+
+    main = "navy.warspite.redshot.Main"
+
+    apiVersion = "1.19"
+
     commands {
         register("redshot") {
-            usage = "/<command>"
+            usage = """
+                    §r--------- §cRedShot §r----------------
+                    §r/<command> get <§cWeapon ID§r>
+                    §r/<command> give <§cPlayer§r> <§cWeapon ID§r>
+                    §r/<command> reload
+            """.trimIndent()
             description = "RedShot command"
             aliases = listOf("rshot")
             permission = "redshot.command"
         }
     }
+
     permissions {
         register("redshot.*") {
             children = listOf("redshot.admin")
@@ -57,21 +98,4 @@ bukkit {
             children = listOf("redshot.command")
         }
     }
-}
-
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-
-    kotlinOptions.jvmTarget = "1.8"
-}
-
-val jar by tasks.getting(Jar::class) {
-    configurations.api.get().isCanBeResolved = true
-    duplicatesStrategy = DuplicatesStrategy.INCLUDE
-    from(
-        configurations.api.get().filter {
-            !it.name.endsWith("pom")
-        }.map {
-            if (it.isDirectory) it else zipTree(it)
-        }
-    )
 }

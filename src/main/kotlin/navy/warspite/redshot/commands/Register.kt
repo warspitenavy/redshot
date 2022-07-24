@@ -1,0 +1,18 @@
+package navy.warspite.redshot.commands
+
+import org.bukkit.command.Command
+import org.bukkit.command.CommandExecutor
+import org.bukkit.command.CommandSender
+
+class Register(private val commands: LinkedHashMap<String, CommandExecutor>) : CommandExecutor {
+
+    override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
+        return when {
+            args.isEmpty() -> false
+            commands.containsKey(args.first()) -> {
+                return commands[args.first()]?.onCommand(sender, command, label, args) ?: false
+            }
+            else -> false
+        }
+    }
+}

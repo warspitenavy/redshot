@@ -28,15 +28,15 @@ object ProjectileController {
             /** スピード, 精密動作性 */
             val shootingBulletSpread = weapon.shooting.bulletSpread
             val scopeBulletSpread = weapon.scope?.bulletSpread ?: shootingBulletSpread
-            val sneakBulletSpread = weapon.sneak?.bulletSpread ?: scopeBulletSpread
-            val bulletSpread = when {
+            val sneakBulletSpread = weapon.sneak?.bulletSpread ?: shootingBulletSpread
+            val spread = when {
                 scopingState[player.uniqueId] == true -> scopeBulletSpread
                 player.isSneaking -> sneakBulletSpread
                 else -> shootingBulletSpread
             }
             val direction = player.location.direction
             direction.multiply(weapon.shooting.projectileSpeed / 10.0)
-            fun randomVector() = ((Math.random() * 1) - 0.5) * bulletSpread
+            fun randomVector() = ((Math.random() * 1) - 0.5) * spread * (weapon.shooting.projectileSpeed * 0.01)
             direction.add(
                 Vector(
                     randomVector(),

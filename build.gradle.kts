@@ -12,7 +12,7 @@ plugins {
 val mcVersion: String by project
 
 group = "navy.warspite"
-version = "2.0-SNAPSHOT"
+version = "2.1"
 
 repositories {
     mavenCentral()
@@ -48,7 +48,7 @@ task<LaunchMinecraftServerTask>("buildAndLaunchServer") {
     dependsOn("jar")
     doFirst {
         copy {
-            from(buildDir.resolve("libs/redshot-2.0-SNAPSHOT.jar"))
+            from(buildDir.resolve("libs/redshot-2.1.jar"))
             into(buildDir.resolve("MinecraftPaperServer/plugins"))
         }
     }
@@ -85,7 +85,8 @@ bukkit {
             """.trimIndent()
             description = "RedShot command"
             aliases = listOf("rshot")
-            permission = "redshot.command"
+            permission = "redshot.admin"
+//            permission = "redshot.command"
         }
     }
 
@@ -95,7 +96,7 @@ bukkit {
         }
         register("redshot.admin") {
             default = BukkitPluginDescription.Permission.Default.OP
-            children = listOf("redshot.command")
+//            children = listOf("redshot.command")
         }
     }
 }

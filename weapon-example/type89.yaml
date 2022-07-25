@@ -1,0 +1,57 @@
+detail:
+  id: type89
+  name: '&aHowa Type89&r'
+  type: DIAMOND_PICKAXE
+  lore:
+    - 'Assault Rifle'
+    - 'Primary Weapon'
+  inventoryControl:
+    - primaryWeapon
+  acquiredSounds:
+    - ENTITY_BAT_TAKEOFF-1-1-0
+shooting:
+  delayBetweenShots: 4
+  projectileAmount: 1
+  projectileDamage: 4
+  projectileSpeed: 42
+  projectileType: snowball
+  bulletSpread: 1.5
+  recoil: true
+  recoilX: 0
+  recoilY: 0
+  shootSounds:
+    - ENTITY_GHAST_SHOOT-1-2-0
+    - ENTITY_SKELETON_HURT-1-2-0
+    - ENTITY_ZOMBIE_ATTACK_WOODEN_DOOR-1-2-0
+sneak:
+  recoil: false
+  recoilX: 0
+  recoilY: 0
+  bulletSpread: 0.5
+burstFire:
+  shotsPerBurst: 2
+  delayBetweenShotsInBurst: 2
+reload:
+  reloadAmount: 30
+  reloadDuration: 50
+  outOfAmmoSounds:
+    - ENTITY_ITEM_BREAK-1-1-0
+  reloadingSounds:
+    - ITEM_FLINTANDSTEEL_USE-1-1-4
+    - BLOCK_IRON_DOOR_OPEN-1-2-6
+    - ITEM_FLINTANDSTEEL_USE-1-1-16
+    - ENTITY_PLAYER_HURT-1-0-17
+    - BLOCK_IRON_DOOR_CLOSE-1-2-49
+firearmAction:
+  type: slide
+  closeDuration: 10
+  closeShootDelay: 12
+  closeSounds:
+    - BLOCK_PISTON_CONTRACT-1-1-0
+    - BLOCK_PISTON_CONTRACT-1-1-3
+scope:
+  sight: false
+  zoomAmount: 3
+  bulletSpread: 0.12
+  toggleZoomSounds:
+    - ENTITY_ENDER_DRAGON_FLAP-1-2-0

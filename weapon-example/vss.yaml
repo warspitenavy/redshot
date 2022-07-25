@@ -1,0 +1,49 @@
+detail:
+  id: vss
+  name: §aВинторез (VSS)§r
+  type: DIAMOND_AXE
+  lore:
+    - 'Sniper Rifle'
+    - 'Primary Weapon'
+  inventoryControl:
+    - primaryWeapon
+  acquiredSounds:
+    - ENTITY_BAT_TAKEOFF-1-1-0
+shooting:
+  delayBetweenShots: 8
+  projectileAmount: 1
+  projectileDamage: 4
+  projectileSpeed: 1000
+  projectileType: snowball
+  bulletSpread: 3
+  recoilX: 0
+  recoilY: 0
+  shootSounds:
+    - BLOCK_NOTE_BLOCK_SNARE-2-1-1
+    - BLOCK_NOTE_BLOCK_SNARE-2-1-2
+    - BLOCK_NOTE_BLOCK_SNARE-1-2-0
+    - BLOCK_WOOD_STEP-1-0-0
+    - ENTITY_SHEEP_SHEAR-1-1-0
+    - ENTITY_SHEEP_SHEAR-1-2-0
+sneak:
+  recoil: true
+  bulletSpread: 2
+reload:
+  reloadAmount: 10
+  reloadDuration: 50
+  outOfAmmoSounds:
+    - ENTITY_ITEM_BREAK-1-1-0
+  reloadingSounds:
+    - ITEM_FLINTANDSTEEL_USE-1-1-4
+    - BLOCK_IRON_DOOR_OPEN-1-2-6
+    - ITEM_FLINTANDSTEEL_USE-1-1-16
+    - ENTITY_PLAYER_HURT-1-0-17
+    - BLOCK_IRON_DOOR_CLOSE-1-2-49
+firearmAction:
+  type: slide
+scope:
+  sight: true
+  zoomAmount: 6
+  bulletSpread: 0.12
+  toggleZoomSounds:
+    - ENTITY_ENDER_DRAGON_FLAP-1-2-0

@@ -12,7 +12,8 @@ object WeaponParam {
         val reload: Reload,
         val firearmAction: FirearmAction,
         val scope: Scope? = null,
-        val headShot: HeadShot? = null
+        val headShot: HeadShot? = null,
+        val particleEffects: ParticleEffects
     )
 
     @Serializable
@@ -85,5 +86,10 @@ object WeaponParam {
         val messageToVictim: String? = null,
         val soundToShooter: List<String> = listOf(),
         val soundToVictim: List<String> = listOf()
+    )
+
+    @Serializable
+    data class ParticleEffects(
+        val terrain: Boolean = true
     )
 }

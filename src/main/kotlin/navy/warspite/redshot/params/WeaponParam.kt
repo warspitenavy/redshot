@@ -11,7 +11,8 @@ object WeaponParam {
         val burstFire: BurstFire? = null,
         val reload: Reload,
         val firearmAction: FirearmAction,
-        val scope: Scope? = null
+        val scope: Scope? = null,
+        val headShot: HeadShot? = null
     )
 
     @Serializable
@@ -75,5 +76,14 @@ object WeaponParam {
         val zoomAmount: Int = 0,
         val bulletSpread: Double = 0.0,
         val toggleZoomSounds: List<String> = listOf()
+    )
+
+    @Serializable
+    data class HeadShot(
+        val damage: Int = 0,
+        val messageToShooter: String? = null,
+        val messageToVictim: String? = null,
+        val soundToShooter: List<String> = listOf(),
+        val soundToVictim: List<String> = listOf()
     )
 }

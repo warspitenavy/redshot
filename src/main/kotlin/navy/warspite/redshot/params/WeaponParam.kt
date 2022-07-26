@@ -71,6 +71,7 @@ object WeaponParam {
     @Serializable
     data class Scope(
         val sight: Boolean = false,
+        val nightVision: Boolean = false,
         val zoomAmount: Int = 0,
         val bulletSpread: Double = 0.0,
         val toggleZoomSounds: List<String> = listOf()

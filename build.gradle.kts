@@ -27,9 +27,9 @@ dependencies {
 
     implementation("org.spigotmc:spigot-api:${mcVersion}-R0.1-SNAPSHOT")
 
-    api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
+    api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0-RC")
 
-    api("com.charleskorn.kaml:kaml:0.45.0")
+    api("com.charleskorn.kaml:kaml:0.46.0")
 //    api("com.akuleshov7:ktoml-core:0.2.11")
 //    api("com.akuleshov7:ktoml-file:0.2.11")
 

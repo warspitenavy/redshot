@@ -64,7 +64,8 @@ class CatchEvent : Listener {
     /** アイテムをドロップ時 */
     @EventHandler
     private fun playerDropItemEvent(event: PlayerDropItemEvent) {
-        val itemMeta = event.itemDrop.itemStack.itemMeta ?: return
+        val itemStack = event.itemDrop.itemStack
+        val itemMeta = itemStack.itemMeta ?: return
         val weapon = getWeaponByItemMeta(itemMeta) ?: return
 
         quitZoom(event.player, null)

@@ -31,28 +31,24 @@ object ReloadController {
                  *  playSoundByListではリロード音を中断できないので
                  *  再実装する、不本意。
                  */
-                if (count < reload.reloadDuration)  {
+                if (count < reload.reloadDuration) {
                     for (sound in sounds) {
                         if (count == sound[3].toInt()) {
                             playSound(
-                                player,
-                                Sound.valueOf(sound[0]),
-                                sound[1].toFloat(),
-                                sound[2].toFloat()
+                                player, Sound.valueOf(sound[0]), sound[1].toFloat(), sound[2].toFloat()
                             )
                         }
                     }
                     count++
                 } else {
                     reloadingState[player.uniqueId] = false
-                    reload(player, itemMeta, weapon)
+                    val itemStack = player.inventory.itemInMainHand
+                    if (itemStack.itemMeta == itemMeta) {
+                        itemStack.itemMeta = setAmmo(itemMeta, weapon.reload.reloadAmount, weapon.detail.name)
+                    }
                     cancel()
                 }
             }
         }.runTaskTimer(plugin, 0, 1)
-    }
-    fun reload(player: Player, itemMeta: ItemMeta, weapon: WeaponParam.Weapon) {
-        val itemStack = player.inventory.itemInMainHand
-        itemStack.itemMeta = setAmmo(itemMeta, weapon.reload.reloadAmount, weapon.detail.name)
     }
 }

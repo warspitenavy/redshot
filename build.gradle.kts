@@ -10,9 +10,10 @@ plugins {
 }
 
 val mcVersion: String by project
+val pluginVersion = "2.2"
 
 group = "navy.warspite"
-version = "2.1"
+version = pluginVersion
 
 repositories {
     mavenCentral()
@@ -48,12 +49,12 @@ task<LaunchMinecraftServerTask>("buildAndLaunchServer") {
     dependsOn("jar")
     doFirst {
         copy {
-            from(buildDir.resolve("libs/redshot-2.1.jar"))
+            from(buildDir.resolve("libs/redshot-${version}.jar"))
             into(buildDir.resolve("MinecraftPaperServer/plugins"))
         }
     }
 
-    jarUrl.set(JarUrl.Paper("1.19"))
+    jarUrl.set(JarUrl.Paper(mcVersion))
     jarName.set("server.jar")
     serverDirectory.set(buildDir.resolve("MinecraftPaperServer"))
     nogui.set(true)
@@ -61,12 +62,12 @@ task<LaunchMinecraftServerTask>("buildAndLaunchServer") {
 }
 
 minecraftServerConfig {
-    jarUrl.set(JarUrl.Paper("1.19"))
+    jarUrl.set(JarUrl.Paper(mcVersion))
 }
 
 bukkit {
     name = "RedShot"
-    version = "2.0"
+    version = pluginVersion
     description = "redshot plugin."
     // website = "https://example.com"
     author = "warspitenavy"

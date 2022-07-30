@@ -13,7 +13,7 @@ object WeaponParam {
         val firearmAction: FirearmAction,
         val scope: Scope? = null,
         val headShot: HeadShot? = null,
-        val particleEffects: ParticleEffects
+        val particleEffects: ParticleEffects? = null
     )
 
     @Serializable

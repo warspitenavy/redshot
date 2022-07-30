@@ -111,7 +111,6 @@ class CatchEvent : Listener {
     /**  被弾のイベント */
     @EventHandler
     private fun projectileHitEvent(event: ProjectileHitEvent) {
-        if (event.hitEntity !is LivingEntity) return
         val projectile = event.entity
 
 //        val weaponId = getProjectileMetadata(projectile.getMetadata("weaponId"))?: return
@@ -120,9 +119,10 @@ class CatchEvent : Listener {
 
 //        val weapon = weapons.find { it.detail.id == weaponId.value() as String } ?: return
 
-        val victim = event.hitEntity as LivingEntity
+        val victim = event.hitEntity as LivingEntity?
+        val shooterValue = shooter.value() as Player?
 
-        victim.noDamageTicks = 0
-        damage?.value().let { victim.damage((it as Int).toDouble(), shooter.value() as Player) }
+        victim?.noDamageTicks = 0
+        damage?.value().let { victim?.damage((it as Int).toDouble(), shooterValue) }
     }
 }

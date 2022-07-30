@@ -10,7 +10,7 @@ plugins {
 }
 
 val mcVersion: String by project
-val pluginVersion = "2.2"
+val pluginVersion = "2.3"
 
 group = "navy.warspite"
 version = pluginVersion

@@ -13,6 +13,7 @@ object AmmoController {
         itemMeta.setDisplayName(weaponNameGen(weaponName, amount))
         return itemMeta
     }
+
     fun getAmmo(itemMeta: ItemMeta): Int? {
         val container = itemMeta.persistentDataContainer
 //        val amount = container.get(key, PersistentDataType.INTEGER) ?: return null
